@@ -3,6 +3,10 @@
     "displayName": "mollbe Theme",
     "description": "",
     "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mollenhauer/vscode-mollbe-theme/tree/main"
+    },
     "engines": {
         "vscode": "^1.65.0"
     },
