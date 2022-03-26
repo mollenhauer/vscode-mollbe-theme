@@ -2,7 +2,7 @@ import {parse} from 'jsonc-parser'
 import deepmerge from 'deepmerge';
 import {readFileSync, writeFileSync} from 'fs';
 
-
+OUTFILE =  'mollbe-theme/themes/mollbe-theme.json'
 const from_files  = [
     'src/Ayu Mirage Bordered Main.jsonc',
     'src/Ayu Mirage Bordered Terminal.jsonc',
@@ -32,4 +32,4 @@ const tokenColors = {
 
 const theme = [...from_files, tokenColors].reduce( (agg,obj) => deepmerge(agg,obj), {})
 const str = JSON.stringify(theme, null, 2);
-writeFileSync( 'mollbe-theme/themes/mollbe-theme.json', str, 'utf-8' )
+writeFileSync( OUTFILE, str, 'utf-8' )
