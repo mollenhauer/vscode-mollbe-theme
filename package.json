@@ -9,10 +9,11 @@
     "deepmerge": "^4.2.2",
     "jsonc-parser": "^3.0.0",
     "nodemon": "^2.0.15",
-    "pm2": "^5.2.0"
+    "pm2": "^5.2.0",
+    "vsce": "^2.7.0"
   },
   "scripts": {
-      "build": "node build.mjs",
-      "dev": "nodemon --watch ./src --ext json,jsonc build.mjs"
+    "build": "node build.mjs",
+    "dev": "nodemon --watch ./src --ext json,jsonc build.mjs"
   }
 }
