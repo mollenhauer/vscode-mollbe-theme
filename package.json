@@ -1,0 +1,18 @@
+{
+  "name": "vscode-mollbe-theme",
+  "version": "0.0.1",
+  "description": "VS Code Theme with dynamic build tools",
+  "main": "build.mjs",
+  "author": "Benjamin Mollenhauer",
+  "license": "MIT",
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "jsonc-parser": "^3.0.0",
+    "nodemon": "^2.0.15",
+    "pm2": "^5.2.0"
+  },
+  "scripts": {
+      "build": "node build.mjs",
+      "dev": "nodemon --watch ./src --ext json,jsonc build.mjs"
+  }
+}
