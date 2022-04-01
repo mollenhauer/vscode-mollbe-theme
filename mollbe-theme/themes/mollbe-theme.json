@@ -56,6 +56,7 @@
     "editorOverviewRuler.wordHighlightStrongForeground": "#87d96c66",
     "editorRuler.foreground": "#8a91992e",
     "editorSuggestWidget.background": "#1c212b",
+    "editorSuggestWidget.foreground": "#ffffff",
     "editorSuggestWidget.border": "#171b24",
     "editorSuggestWidget.highlightForeground": "#80cbc4",
     "editorSuggestWidget.selectedBackground": "#63759926",
@@ -205,17 +206,209 @@
     "terminal.ansiYellow": "#facc6e",
     "terminal.background": "#1f2430",
     "terminal.foreground": "#cccac2",
-    "editor.background": "#c9d0e1",
-    "editor.foreground": "#000000",
-    "editor.lineHighlightBackground": "#8aa1d0"
+    "editor.background": "#fbfdff",
+    "editor.lineHighlightBackground": "#2e74ff2b",
+    "editor.selectionBackground": "#dbb7d9",
+    "editor.selectionForeground": "#000000",
+    "editor.wordHighlightBackground": "#e8e8e8",
+    "editor.wordHighlightForeground": "#000000",
+    "editor.wordHighlightBorder": "#8f9eff"
+  },
+  "semanticHighlighting": true,
+  "semanticTokenColors": {
+    "class.declaration": "#0057ff",
+    "method.declaration": "#0057ff",
+    "function.declaration": "#0057ff",
+    "variable.declaration": "#6c5400",
+    "variable": "#948153",
+    "parameter": "#dfad00",
+    "selfParameter": "#dfad00",
+    "builtinConstant": "#ac6193",
+    "function.builtin": "#3c2c00"
   },
   "tokenColors": [
+    {
+      "scope": [
+        "storage.type.function"
+      ],
+      "settings": {
+        "foreground": "#4f5cb8"
+      }
+    },
+    {
+      "scope": [
+        "storage.type.class"
+      ],
+      "settings": {
+        "foreground": "#4f5cb8"
+      }
+    },
+    {
+      "scope": [
+        "entity.name.tag.html"
+      ],
+      "settings": {
+        "foreground": "#4f5cb8"
+      }
+    },
+    {
+      "scope": [
+        "punctuation.definition.tag"
+      ],
+      "settings": {
+        "foreground": "#4f5cb8"
+      }
+    },
+    {
+      "scope": [
+        "meta.attribute"
+      ],
+      "settings": {
+        "foreground": "#6c5400"
+      }
+    },
+    {
+      "scope": [
+        "string.quoted.double.html"
+      ],
+      "settings": {
+        "foreground": "#000000"
+      }
+    },
+    {
+      "scope": [
+        "string"
+      ],
+      "settings": {
+        "foreground": "#ac6193"
+      }
+    },
+    {
+      "scope": [
+        "string.quoted.docstring.single"
+      ],
+      "settings": {
+        "foreground": "#ac6193"
+      }
+    },
+    {
+      "scope": [
+        "constant.numeric"
+      ],
+      "settings": {
+        "foreground": "#ac6193"
+      }
+    },
+    {
+      "scope": [
+        "constant.character.escape"
+      ],
+      "settings": {
+        "foreground": "#7b3465"
+      }
+    },
+    {
+      "scope": [
+        "constant.language"
+      ],
+      "settings": {
+        "foreground": "#ac6193"
+      }
+    },
+    {
+      "scope": [
+        "keyword.control.flow"
+      ],
+      "settings": {
+        "foreground": "#3c2c00"
+      }
+    },
+    {
+      "scope": [
+        "keyword.control.import"
+      ],
+      "settings": {
+        "foreground": "#3c2c00"
+      }
+    },
+    {
+      "scope": [
+        "source"
+      ],
+      "settings": {
+        "foreground": "#948153"
+      }
+    },
+    {
+      "scope": [
+        "string.quoted.docstring.multi"
+      ],
+      "settings": {
+        "foreground": "#808080"
+      }
+    },
+    {
+      "scope": [
+        "string.quoted.docstring.single"
+      ],
+      "settings": {
+        "foreground": "#808080"
+      }
+    },
     {
       "scope": [
         "comment"
       ],
       "settings": {
-        "foreground": "#B8CFE680"
+        "foreground": "#6b6b6b"
+      }
+    },
+    {
+      "scope": [
+        "keyword.codetag.notation"
+      ],
+      "settings": {
+        "foreground": "#d4af35"
+      }
+    },
+    {
+      "scope": [
+        "punctuation.separator"
+      ],
+      "settings": {
+        "foreground": "#948153"
+      }
+    },
+    {
+      "scope": [
+        "punctuation.definition"
+      ],
+      "settings": {
+        "foreground": "#948153"
+      }
+    },
+    {
+      "scope": [
+        "keyword.operator.arithmetic"
+      ],
+      "settings": {
+        "foreground": "#392d00"
+      }
+    },
+    {
+      "scope": [
+        "keyword.operator.comparison"
+      ],
+      "settings": {
+        "foreground": "#392d00"
+      }
+    },
+    {
+      "scope": [
+        "keyword.operator.assignment"
+      ],
+      "settings": {
+        "foreground": "#392d00"
       }
     }
   ]

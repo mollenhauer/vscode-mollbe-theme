@@ -21,5 +21,10 @@
                 "path": "./themes/mollbe-theme.json"
             }
         ]
-    }
+    },
+    "configurationDefaults": {
+        "[languageId]": {
+          "editor.semanticHighlighting.enabled": true
+        }
+      }
 }

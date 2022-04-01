@@ -37,6 +37,7 @@
 		"editorGutter.deletedBackground": "#f27983cc",
 		"editorGutter.modifiedBackground": "#80bfffcc",
 		"editorHoverWidget.background": "#1f2430",
+
 		"editorHoverWidget.border": "#171b24",
 		"editorIndentGuide.activeBackground": "#8a919959",
 		"editorIndentGuide.background": "#8a91992e",
@@ -56,6 +57,7 @@
 		"editorOverviewRuler.wordHighlightStrongForeground": "#87d96c66",
 		"editorRuler.foreground": "#8a91992e",
 		"editorSuggestWidget.background": "#1c212b",
+		"editorSuggestWidget.foreground": "#ffffff",
 		"editorSuggestWidget.border": "#171b24",
 		"editorSuggestWidget.highlightForeground": "#80cbc4",
 		"editorSuggestWidget.selectedBackground": "#63759926",
