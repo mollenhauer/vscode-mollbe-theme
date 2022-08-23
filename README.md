@@ -3,6 +3,8 @@
 * 🎶 With focus on semantic highlighting.
 * 🎨 Dynamic build tools, featuring [chroma.js](https://gka.github.io/chroma.js/) for fast and concise color adjustments all in javascript.
 
+
+
 ## Example of configuration:
 ```javascript
 const gold = chroma.hsl(46, .65, .52)
@@ -23,13 +25,15 @@ const to_parse_colors = [
 ]
 ```
 
-
 ---
+
+<!---
 
 ## ⭐ Download
-Get it from [VS Code Marketplace](https://sdfasdfasdf/)
-
+Get it from [VS Code Marketplace](https://)
 ---
+
+--->
 
 
 ## 🧤 Development
