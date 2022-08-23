@@ -18,6 +18,10 @@ const Comments = chroma('Gray')
 
 const KeyWord = gold.desaturate(1.5).darken(3)
 const Text = gold.desaturate(2).darken(1)
+// prefixed with semantic it will become a semantic token
+//          with colors it will become a theme color
+//          else it will be a textmate scope
+
 const to_parse_colors = [
     // keywords class, def
     ['storage.type.function', Structure],

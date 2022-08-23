@@ -1,7 +1,4 @@
 {
 	"$schema": "vscode://schemas/color-theme",
     "semanticHighlighting": true,
-    "semanticTokenColors": {
-    //   "variable.readonly:java": "#ff0011"
-    }
 }
