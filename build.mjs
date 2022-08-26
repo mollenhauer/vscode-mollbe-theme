@@ -3,13 +3,13 @@ import deepmerge from 'deepmerge';
 import {readFileSync, writeFileSync} from 'fs';
 import chroma from "chroma-js"
 import * as path from 'path'
-import * as util from 'util'
 import { existsSync } from 'fs'
 import { exit } from 'process'
 import SYNTAX_COLORS from './src/syntax_highlight.mjs'
 import glob from 'glob'
 import {userInfo} from 'os'
-const log = o => console.log(util.inspect(o, {showHidden: false, depth: null, colors: true}))
+import {inspect} from 'util'
+const log = o => console.log(inspect(o, {showHidden: false, depth: null, colors: true}))
 
 const Types = Object.freeze({
     textmate: Symbol('textmate'),

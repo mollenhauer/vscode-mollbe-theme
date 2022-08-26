@@ -5,19 +5,25 @@
   "main": "build.mjs",
   "author": "Benjamin Mollenhauer",
   "license": "MIT",
+  "config": {
+    "buildOutput": "mollbe-theme/themes/mollbe-theme.json"
+  },
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.1.2",
     "chroma-js": "^2.4.2",
     "deepmerge": "^4.2.2",
     "glob": "^8.0.3",
     "jsonc-parser": "^3.0.0",
     "nodemon": "^2.0.15",
     "pm2": "^5.2.0",
+    "svgdom": "^0.1.10",
     "vsce": "^2.7.0"
   },
   "scripts": {
     "build": "node build.mjs",
     "package": "cd mollbe-theme; node ../node_modules/vsce/vsce package",
     "publish": "node node_modules/vsce/vsce publish",
-    "dev": "nodemon --watch ./src --watch ./build.mjs --ext mjs,json,jsonc build.mjs -- theme"
+    "dev": "nodemon --watch ./src --watch ./build.mjs --ext mjs,json,jsonc build.mjs -- theme",
+    "swatches": "node swatches.mjs \"%npm_package_config_buildOutput%\" > swatches.html"
   }
 }
