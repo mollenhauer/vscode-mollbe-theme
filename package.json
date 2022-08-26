@@ -1,6 +1,6 @@
 {
   "name": "vscode-mollbe-theme",
-  "version": "0.0.1",
+  "version": "0.0.12",
   "description": "VS Code Theme with dynamic build tools featuring chroma",
   "main": "build.mjs",
   "author": "Benjamin Mollenhauer",
