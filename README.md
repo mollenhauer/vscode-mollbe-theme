@@ -23,13 +23,16 @@ const Selection = Gold.set('hsl.h', 46-90).brighten(2.0).desaturate(2)
 // ...
 const to_parse_colors = [
     // "semantic" prefix for semantic scopes
-    ['semantic.class.declaration', Structure_Lvl1],
+    'semantic.class.declaration', Structure_Lvl1,
     // ...
     // no prefix for textmate scopes
-    ['storage.type.class', Structure_Lvl2],
+    'storage.type.class', Structure_Lvl2,
+    'entity.name.function.python': {color: Structure_Lvl2, fontStyle: 'bold'},
+    // color is optional:
+    'entity.name.function.python': {fontStyle: 'bold'},
     // ...
     // "colors" prefix will set editor colors
-    ['colors.editor.selectionBackground', Selection],
+    'colors.editor.selectionBackground', Selection,
 ]
 ```
 `src/syntax_highlighting.mjs` will get build and merged into everything `src/*.jsonc`. So reuse of compiled VS Code Themes is easy.
