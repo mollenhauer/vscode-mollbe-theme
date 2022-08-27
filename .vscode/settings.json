@@ -1,0 +1,22 @@
+{
+    "workbench.colorCustomizations": {
+        "errorLens.errorBackground": "#00000011",
+        "errorLens.errorForeground": "#b1101098",
+        "activityBarBadge.background": "#80CBC4",
+        "list.activeSelectionForeground": "#80CBC4",
+        "list.inactiveSelectionForeground": "#80CBC4",
+        "list.highlightForeground": "#80CBC4",
+        "scrollbarSlider.activeBackground": "#80CBC450",
+        "editorSuggestWidget.highlightForeground": "#80CBC4",
+        "textLink.foreground": "#80CBC4",
+        "progressBar.background": "#80CBC4",
+        "pickerGroup.foreground": "#80CBC4",
+        "tab.activeBorder": "#80CBC4",
+        "editorInlayHint.background": "#00000000",
+        "editorInlayHint.foreground": "#555555",
+        "editorInlayHint.parameterForeground": "#999",
+        "activityBar.background": "#31235D",
+        "titleBar.activeBackground": "#443283",
+        "titleBar.activeForeground": "#FCFCFE"
+    }
+}

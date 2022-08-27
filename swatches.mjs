@@ -45,17 +45,45 @@ console.log([
     `body {
         font-family: "Consolas", Arial, sans-serif;
         background-color: ${bgColor};
-        margin: 2rem;
-
+        margin: 0rem 4rem;
     }
-    table {margin:auto;}
+    table {
+        margin: 6rem auto;
+    }
     td {
         padding: .2rem .3rem;
+    }
+    .bgColor {
+        background-color: black;
+        color: ${bgColor};
+        display: inline-block;
+        padding: 0.5rem 1rem;
+    }
+    .hero {
+        border-bottom: 1px solid black;
+        padding: 1rem 0rem;
+        display: block;
+
+    }
+    .filename {
+        font-size: .8rem;
+        color: gray;
     }
     `,
     '</style>',
     '</head>',
     '<body>',
+    '<div class="hero">',
+    '<span class="filename">',
+    files.toString(),
+    '</span>',
+    '</div>',
+    '<div class="hero">',
+    '<span class="bgColor">',
+    bgColor,
+    '</span>',
+    '</div>',
+    '<div class="hero">',
     '<table>' +
     y.map( yy =>
         '<tr>\n' + x.map( xx => {
@@ -66,6 +94,7 @@ console.log([
        }).join("\n") + '\n</tr>'
     ).join("\n"),
     '</table>',
+    '</div>',
     '</body>',
     '</head>',
 ].join("\n"))

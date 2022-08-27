@@ -1,6 +1,6 @@
 {
   "name": "vscode-mollbe-theme",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "VS Code Theme with dynamic build tools featuring chroma",
   "main": "build.mjs",
   "author": "Benjamin Mollenhauer",
@@ -13,6 +13,7 @@
     "chroma-js": "^2.4.2",
     "deepmerge": "^4.2.2",
     "glob": "^8.0.3",
+    "is-plain-object": "^5.0.0",
     "jsonc-parser": "^3.0.0",
     "nodemon": "^2.0.15",
     "pm2": "^5.2.0",
