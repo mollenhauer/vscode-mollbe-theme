@@ -95,8 +95,10 @@ function import_files(files) {
 function map_textmate( {scope, color, fontStyle} ) {
     return {
         scope: scope,
-        ...color ? {"settings": { "foreground": color }} : {},
-        ...fontStyle ? {"settings": { "fontStyle": fontStyle }} : {},
+        settings: {
+            ...color ? { "foreground": color } : {},
+            ...fontStyle ? { "fontStyle": fontStyle } : {},
+        }
     }
 }
 

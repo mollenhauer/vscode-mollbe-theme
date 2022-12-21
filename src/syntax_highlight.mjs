@@ -3,11 +3,11 @@ import chroma from "chroma-js"
 
 const Background = chroma("#FDF6E3") //.desaturate(.2)
 const Text = "#586E75"
-const Dim = "#586E7580"
+const Dim = {color: "#586E7580"}
 const UIAccent = "#AC9D57"
 
 
-const Structurel_Lvl1 = "#D33682"
+const Structurel_Lvl1 = "#f40e7d"
 const Structurel_Lvl1_Sub = chroma(Background).mix(Structurel_Lvl1, .8)
 const Structurel_Lvl3 = Text // chroma(Background).mix(Structurel_Lvl1, .75)
 
@@ -20,7 +20,7 @@ const Keyword = Structurel_Lvl3
 // const Data_Lvl1 = "#0290f5"
 // const Data_Lvl2 = chroma(Background).mix(Data_Lvl1, .8)
 // const Data_Lvl3 = chroma(Background).mix(Data_Lvl1, .6)
-const Data_Lvl1 = "#0290f5"
+const Data_Lvl1 = "#398ece"
 const Data_Lvl2 = Text
 const Data_Lvl3 = Text
 
@@ -30,10 +30,10 @@ const Variable = Data_Lvl3
 
 
 
-const String = "#859900"
+const String = "#2AA198"
 const StringPlaceholder = chroma(String).alpha(0x99)
 
-const Comments = chroma("#2AA198")
+const Comments = chroma("#c24998")
 const CommentsSub = chroma(Comments).alpha(0x80)
 
 const Punctation =  chroma(Structurel_Lvl1).darken(.5)
@@ -41,11 +41,82 @@ const HtmlStrings = Punctation
 
 const ShouldNotShow = 'Cyan'
 
+const HighlightedStructure = {color: '#ff0051'}
 
 const Selection = chroma(Data_Lvl1).brighten(1).desaturate(1)
 
-
+const bold = {fontStyle: 'bold'}
+const keywords = {color: Text, ...bold}
 export default {
+
+    // 'entity.name.function': 'black', // überschreibt meta.definition.function
+    'meta.definition.function': {color: Structurel_Lvl1, fontStyle: 'bold'}, // name of function
+    "meta.parameters.js": Structurel_Lvl3,
+    'storage.type.function.js': {color: Structurel_Lvl1_Sub}, // function keyword
+    'storage.type.function.arrow.js': Dim, // sonst farbe von storage.type.function.js
+
+    'keyword.control.flow': keywords, // return
+    'keyword.control.loop': keywords, // for, while
+    'keyword.control.conditional': keywords, // if, else
+    'keyword.operator.ternary': keywords, // ? :
+
+
+
+    'meta.function-call': bold, // alle functionsaufrufe
+    "variable.other.constant.object.js": {fontStyle: 'normal'}, // sonst überschreibt meta.function-call auch KONSTANTE.map
+    // "entity.name.function.js": {fontStyle: 'normal'}, // map -- versaut meta.function-call
+
+
+
+    // neue Variablen
+    'storage.type': { ...bold}, // const, let, var
+    'meta.definition.variable': Data_Lvl1,
+
+    // import
+    'keyword.control.import': {...Dim, ...bold}, // import
+    'keyword.control.from': {...Dim, ...bold}, // from
+    'variable.other.readwrite.alias': bold, // import {}
+    'constant.language.import-export-all': HighlightedStructure, // import *, pasenden zu {}
+    'meta.import.js': Text, // alles vom Import außer alias, sonst Farbe von Strings
+    // {} sind punctuation.definition.block.js
+
+    // Comments
+    'comment.line': Dim,
+    'comment.block': Comments,
+    'comment.block.documentation.js': CommentsSub,
+
+    // Strings
+    // "meta.object-literal.key.js": 'red', // {[your_key]: 'Foo'} - andeere object keys werden überlagert von string.quoted.double
+    'string.quoted.double.js': String,
+    'string.quoted.single.js': String,
+    'meta.object-literal.key': String, // Einheitlichkeit von {"foo":..., foo:...}
+
+    // Templates
+    'punctuation.definition.template-expression': StringPlaceholder, // ${}
+    'meta.template.expression': StringPlaceholder, // inside ${}
+    'punctuation.definition.string.template': StringPlaceholder, // backticks
+    'string.template': String,
+
+    // bracets and stuff
+    'meta.brace.round': Dim,
+    'punctuation.accessor': Dim,
+    'punctuation.separator.key-value': Dim,
+    'keyword.operator.assignment': Dim, // =
+    'keyword.operator.comparison': Dim, // ==, ===
+    'punctuation.definition.string.begin': Dim, // "
+    'punctuation.definition.string.end': Dim, // "
+
+
+    // objects
+    "punctuation.definition.block.js": HighlightedStructure,
+    "meta.brace.square.js": Dim,
+    "meta.parameter.object-binding-pattern": HighlightedStructure, // {} in ({type,...other}) => {
+    "variable.parameter.js": Data_Lvl1, // variablen in ({type,...other}) => { und in function( foo, bar )
+    "keyword.operator.rest.js": Dim, //...
+    "keyword.operator.spread.js": Dim, // ...
+
+
+    /*
     'storage.type.function': Structure,
 
     'storage.type.function': Structure,
@@ -59,10 +130,10 @@ export default {
     // 'meta.function.parameters': {fontStyle: 'normal'},
 
     'storage.type.function.arrow': StructureName,
-    'semantic.class.declaration': StructureName,
-    'semantic.method.declaration': StructureName,
+    // 'semantic.class.declaration': StructureName,
+    // 'semantic.method.declaration': StructureName,
     // 'entity.name.type.class': StructureNames, // fallback: dann wird auch der import Orange
-    'semantic.function.declaration': StructureName,
+    // 'semantic.function.declaration': StructureName,
 
     // Name of function in declaration bold
     'entity.name.function.python': {fontStyle: 'bold'},
@@ -74,8 +145,8 @@ export default {
     // Variablen & Parameter
     // 'semantic.parameter': Parameter, // geht net, sonst wird' in .py bei jedem Functionsaufruf bunt.
     // 'semantic.selfParameter': Parameter,
-    'semantic.parameter.declaration': Structure,
-    'semantic.selfParameter.declaration': Structure,
+    // 'semantic.parameter.declaration': Structure,
+    // 'semantic.selfParameter.declaration': Structure,
 
 
 
@@ -83,7 +154,7 @@ export default {
     // "variable.parameter.function.language": Parameter,
     // 'meta.function.parameters': Parameter,
 
-    'semantic.variable.declaration': VariableDeclaration,
+    // 'semantic.variable.declaration': VariableDeclaration,
     // 'meta.function-call.arguments': Parameter,
     // 'meta.function-call.generic.python': "Cyan", // Gegengewicht
     // 'meta.function-call.arguments.python': "Yellow",
@@ -93,7 +164,7 @@ export default {
     // "meta.member.access": Parameter,
 
 
-    'semantic.variable': Variable,  // muss gleich Text sein, sonst passt's beim Import nicht mehr
+    // 'semantic.variable': Variable,  // muss gleich Text sein, sonst passt's beim Import nicht mehr
     'meta.item-access.arguments.python': Variable,
 
     // 'meta.function-call': Structurel_Lvl1_Sub, //{fontStyle: 'bold'},
@@ -121,7 +192,7 @@ export default {
     // HTML
     'entity.name.tag.html': StructureName,
     'meta.attribute.html': Structure,
-    'semantic.class': Text, // Gegengewicht für Class-Ref. in Pythoncode
+    // 'semantic.class': Text, // Gegengewicht für Class-Ref. in Pythoncode
     'string.quoted.double.html': HtmlStrings,
     'text.html': Text,
     'string.quoted.double.html': String,
@@ -154,7 +225,7 @@ export default {
     // Keywords
     'keyword.control.flow': {color: Keyword, fontStyle: 'bold'},
     'keyword.control.conditional': {color: Keyword, fontStyle: 'bold'},
-    'semantic.function.builtin': Keyword, //support.function.builtin.python
+    // 'semantic.function.builtin': Keyword, //support.function.builtin.python
     'storage.type': Keyword, //const, f-String
 
 
@@ -231,7 +302,7 @@ export default {
 
 
     // 'semantic.class': chroma(Structure).brighten(2),
-    'semantic.module': Data_Lvl2,
+    // 'semantic.module': Data_Lvl2,
     // // 'entity.name.namespace': chroma(Structure).brighten(2),
 
     // "editor.findMatchBackground": "#695380",
@@ -261,7 +332,7 @@ export default {
 
     // "editor.button.background": Gold,
     // "editor.statusBarItem.remoteBackground": Gold,
-
+*/
 }
 
 // https://github.com/omgovich/colord

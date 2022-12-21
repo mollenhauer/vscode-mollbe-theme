@@ -21,6 +21,8 @@ function parseColor( color ) {
 }
 
 function parseColorConfig( config ) {
+    let y = 'ss'
+    var x = 'a'
     const [scope, raw_color, style] = config
     const color = parseColor(raw_color)
     const prefixRegEx = new RegExp(/^(?:(semantic|colors)\.)?(.*)$/);
@@ -70,6 +72,10 @@ function map_textmate( {scope, color, style} ) {
  */
 
 // MY Comments
+
+/*
+comment bvlock
+*/
 function map_other({scope, color}) {
     return {[scope]: color}
 }
@@ -79,8 +85,12 @@ const DEFAULT_MAPPER = {
     [Types.colors]:   map_other,
     [Types.semantic]: map_other,
 }
+'adsfasdf'
+`dafadsfadsf`
+"sdfasdfa"
 
 const THEME_WRAPPER = {
+
     [Types.textmate]: js => ({"tokenColors": [js]}),
     [Types.colors]: js => ({"colors": js}),
     [Types.semantic]:   js => ({"semanticTokenColors": js}),
@@ -135,7 +145,7 @@ function find_user_settings_json() {
     }
 }
 
-function sanitize_jsonc( objects) {
+function sanitize_jsonc( objects ) {
     const objs = objects
         .filter( o => o['$schema'] == 'vscode://schemas/color-theme' && o['colors'] )
         .map( ({colors}) => {
