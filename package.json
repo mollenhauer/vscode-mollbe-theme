@@ -18,12 +18,12 @@
     "nodemon": "^2.0.15",
     "pm2": "^5.2.0",
     "svgdom": "^0.1.10",
-    "vsce": "^2.7.0"
+    "vsce": "^2.10.2"
   },
   "scripts": {
     "build": "node build.mjs",
     "package": "cd mollbe-theme; node ../node_modules/vsce/vsce package",
-    "publish": "node node_modules/vsce/vsce publish",
+    "publish": "cd mollbe-theme; node ../node_modules/vsce/vsce publish --baseImagesUrl \"https://raw.githubusercontent.com/mollenhauer/vscode-mollbe-theme/main/\"",
     "dev": "nodemon --watch ./src --watch ./build.mjs --ext mjs,json,jsonc build.mjs -- theme",
     "swatches": "node swatches.mjs \"%npm_package_config_buildOutput%\" > swatches.html"
   }

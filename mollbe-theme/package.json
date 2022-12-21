@@ -10,6 +10,7 @@
     "engines": {
         "vscode": "^1.65.0"
     },
+    "publisher": "mollenhauer",
     "categories": [
         "Themes"
     ],
@@ -24,7 +25,10 @@
     },
     "configurationDefaults": {
         "[languageId]": {
-          "editor.semanticHighlighting.enabled": true
+            "editor.semanticHighlighting.enabled": true
         }
-      }
+    },
+    "dependencies": {
+        "vsce": "^2.10.2"
+    }
 }

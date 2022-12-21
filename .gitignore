@@ -1,4 +1,5 @@
 node_modules
 *.vsix
 *.*secret
-settings.example.json
+settings.example.
+*.ignore
