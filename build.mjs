@@ -23,7 +23,7 @@ function parseColor( color ) {
     try {
         return chroma(color).hex()
     } catch (error) {
-        raise ({ color, error })
+        throw ({ color, error })
     }
 }
 
@@ -53,12 +53,17 @@ function parseConfig( raw_scope, color_or_obj) {
             fontStyle: fontStyle,
         }
     } else {
-        const color = parseColor(color_or_obj)
-        return {
-            type: type,
-            scope: scope,
-            color: color,
+        try {
+            const color = parseColor(color_or_obj)
+            return {
+                type: type,
+                scope: scope,
+                color: color,
+            }
+        } catch (err) {
+            throw new Error(`Could not parse "${color_or_obj}" in ${raw_scope}`)
         }
+
     }
 }
 

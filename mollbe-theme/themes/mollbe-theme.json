@@ -97,7 +97,7 @@
     "editorBracketMatch.border": "#dbe69e",
     "editor.foldBackground": "#00000014",
     "editorLineNumber.foreground": "#d0dbe1",
-    "scrollbarSlider.background": "#f6efd9",
+    "scrollbarSlider.background": "#efe7cf",
     "scrollbarSlider.hoverBackground": "#c8bc90",
     "scrollbarSlider.activeBackground": "#ac9d57"
   },

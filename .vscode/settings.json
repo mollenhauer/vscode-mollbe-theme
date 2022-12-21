@@ -15,7 +15,7 @@
         "editorInlayHint.background": "#00000000",
         "editorInlayHint.foreground": "#555555",
         "editorInlayHint.parameterForeground": "#999",
-        "activityBar.background": "#31235D",
+        "activityBar.background": "#d1c3ff",
         "titleBar.activeBackground": "#443283",
         "titleBar.activeForeground": "#FCFCFE"
     }

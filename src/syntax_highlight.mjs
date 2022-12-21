@@ -252,7 +252,7 @@ export default {
     "colors.editorLineNumber.activeForeground": Selection,
     "colors.editorLineNumber.foreground": chroma(Selection).mix(Background, .5),
 
-    "colors.scrollbar.shadow": "",
+    // "colors.scrollbar.shadow": "",
     "colors.scrollbarSlider.background": chroma(Background).mix(UIAccent, .2),
     "colors.scrollbarSlider.hoverBackground": chroma(Background).mix(UIAccent, .7),
     "colors.scrollbarSlider.activeBackground": chroma(Background).mix(UIAccent, 1),
