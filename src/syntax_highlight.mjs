@@ -1,340 +1,218 @@
-
 import chroma from "chroma-js"
 
-const Background = chroma("#FDF6E3") //.desaturate(.2)
-const Text = "#586E75"
+function createTemplate() {
+    const theme = {}
+    const chromaPrototype = Object.getPrototypeOf(chroma('red'))
+    function format(name, ...properties) {
+        function parseProperties(props) {
+            const isPlainObject = value => value?.constructor === Object;
+            const isChroma = o => Object.getPrototypeOf(o) === chromaPrototype
+            const parsedProps = props.map( p => {
+                if (typeof p === 'string' && (p == 'normal'||p == 'bold'||p == 'italic'||p == 'underline') ) {
+                    return {fontStyle: p}
+                } else if (typeof p === 'string' ) {
+                    return {color: p}
+                } else if ( isPlainObject(p) ) {
+                    return p
+                } else if ( isChroma(p) ) {
+                    return {color: p.hex()}
+                }
+            })
+            return parsedProps.reduce(
+                (acc, val) => Object.assign(acc, val),
+                {}
+            )
+        }
+        const props = parseProperties(properties)
+        theme[name] = props
+        return props
+    }
+    return [theme, format]
+}
+const [theme, format] = createTemplate()
+
+
 const Dim = {color: "#586E7580"}
-const UIAccent = "#AC9D57"
-
-
-const Structurel_Lvl1 = "#f40e7d"
-const Structurel_Lvl1_Sub = chroma(Background).mix(Structurel_Lvl1, .8)
-const Structurel_Lvl3 = Text // chroma(Background).mix(Structurel_Lvl1, .75)
-
-const StructureName = Structurel_Lvl1
-const Structure = Structurel_Lvl1_Sub
-const Keyword = Structurel_Lvl3
-
-
-
-// const Data_Lvl1 = "#0290f5"
-// const Data_Lvl2 = chroma(Background).mix(Data_Lvl1, .8)
-// const Data_Lvl3 = chroma(Background).mix(Data_Lvl1, .6)
-const Data_Lvl1 = "#398ece"
-const Data_Lvl2 = Text
-const Data_Lvl3 = Text
-
-const Parameter = Data_Lvl1
-const VariableDeclaration = Data_Lvl2
-const Variable = Data_Lvl3
-
-
-
-const String = "#2AA198"
-const StringPlaceholder = chroma(String).alpha(0x99)
-
-const Comments = chroma("#c24998")
-const CommentsSub = chroma(Comments).alpha(0x80)
-
-const Punctation =  chroma(Structurel_Lvl1).darken(.5)
-const HtmlStrings = Punctation
-
-const ShouldNotShow = 'Cyan'
-
-const HighlightedStructure = {color: '#ff0051'}
-
-const Selection = chroma(Data_Lvl1).brighten(1).desaturate(1)
-
 const bold = {fontStyle: 'bold'}
-const keywords = {color: Text, ...bold}
-export default {
-
-    // 'entity.name.function': 'black', // überschreibt meta.definition.function
-    'meta.definition.function': {color: Structurel_Lvl1, fontStyle: 'bold'}, // name of function
-    "meta.parameters.js": Structurel_Lvl3,
-    'storage.type.function.js': {color: Structurel_Lvl1_Sub}, // function keyword
-    'storage.type.function.arrow.js': Dim, // sonst farbe von storage.type.function.js
-
-    'keyword.control.flow': keywords, // return
-    'keyword.control.loop': keywords, // for, while
-    'keyword.control.conditional': keywords, // if, else
-    'keyword.operator.ternary': keywords, // ? :
-
-
-
-    'meta.function-call': bold, // alle functionsaufrufe
-    "variable.other.constant.object.js": {fontStyle: 'normal'}, // sonst überschreibt meta.function-call auch KONSTANTE.map
-    // "entity.name.function.js": {fontStyle: 'normal'}, // map -- versaut meta.function-call
-
-
-
-    // neue Variablen
-    'storage.type': { ...bold}, // const, let, var
-    'meta.definition.variable': Data_Lvl1,
-
-    // import
-    'keyword.control.import': {...Dim, ...bold}, // import
-    'keyword.control.from': {...Dim, ...bold}, // from
-    'variable.other.readwrite.alias': bold, // import {}
-    'constant.language.import-export-all': HighlightedStructure, // import *, pasenden zu {}
-    'meta.import.js': Text, // alles vom Import außer alias, sonst Farbe von Strings
-    // {} sind punctuation.definition.block.js
-
-    // Comments
-    'comment.line': Dim,
-    'comment.block': Comments,
-    'comment.block.documentation.js': CommentsSub,
-
-    // Strings
-    // "meta.object-literal.key.js": 'red', // {[your_key]: 'Foo'} - andeere object keys werden überlagert von string.quoted.double
-    'string.quoted.double.js': String,
-    'string.quoted.single.js': String,
-    'meta.object-literal.key': String, // Einheitlichkeit von {"foo":..., foo:...}
-
-    // Templates
-    'punctuation.definition.template-expression': StringPlaceholder, // ${}
-    'meta.template.expression': StringPlaceholder, // inside ${}
-    'punctuation.definition.string.template': StringPlaceholder, // backticks
-    'string.template': String,
-
-    // bracets and stuff
-    'meta.brace.round': Dim,
-    'punctuation.accessor': Dim,
-    'punctuation.separator.key-value': Dim,
-    'keyword.operator.assignment': Dim, // =
-    'keyword.operator.comparison': Dim, // ==, ===
-    'punctuation.definition.string.begin': Dim, // "
-    'punctuation.definition.string.end': Dim, // "
-
-
-    // objects
-    "punctuation.definition.block.js": HighlightedStructure,
-    "meta.brace.square.js": Dim,
-    "meta.parameter.object-binding-pattern": HighlightedStructure, // {} in ({type,...other}) => {
-    "variable.parameter.js": Data_Lvl1, // variablen in ({type,...other}) => { und in function( foo, bar )
-    "keyword.operator.rest.js": Dim, //...
-    "keyword.operator.spread.js": Dim, // ...
-
-
-    /*
-    'storage.type.function': Structure,
-
-    'storage.type.function': Structure,
-    'storage.type.class': Structure,
-
-    // Classen und Funktionsköpfe hervorheben
-    // 'meta.class': {fontStyle: 'bold'},
-    'entity.name.type.class.python': {fontStyle: 'bold'},
-    // 'meta.function': ShouldNotShow, 'normal',
-    // 'variable.parameter.function.language': {fontStyle: 'normal'},
-    // 'meta.function.parameters': {fontStyle: 'normal'},
-
-    'storage.type.function.arrow': StructureName,
-    // 'semantic.class.declaration': StructureName,
-    // 'semantic.method.declaration': StructureName,
-    // 'entity.name.type.class': StructureNames, // fallback: dann wird auch der import Orange
-    // 'semantic.function.declaration': StructureName,
-
-    // Name of function in declaration bold
-    'entity.name.function.python': {fontStyle: 'bold'},
-    'support.function.magic.python': {fontStyle: 'bold'}, //__init__
-
-    // 'entity.name.function': StructureNames, // fallback: dann werden auch eingebaute Funktionen orange
-
-
-    // Variablen & Parameter
-    // 'semantic.parameter': Parameter, // geht net, sonst wird' in .py bei jedem Functionsaufruf bunt.
-    // 'semantic.selfParameter': Parameter,
-    // 'semantic.parameter.declaration': Structure,
-    // 'semantic.selfParameter.declaration': Structure,
-
-
-
-    // 'variable.parameter.function': Parameter,
-    // "variable.parameter.function.language": Parameter,
-    // 'meta.function.parameters': Parameter,
-
-    // 'semantic.variable.declaration': VariableDeclaration,
-    // 'meta.function-call.arguments': Parameter,
-    // 'meta.function-call.generic.python': "Cyan", // Gegengewicht
-    // 'meta.function-call.arguments.python': "Yellow",
-
-    'variable.parameter.function-call.arguments': Dim,
-    'variable.parameter.function-call': Dim,
-    // "meta.member.access": Parameter,
-
-
-    // 'semantic.variable': Variable,  // muss gleich Text sein, sonst passt's beim Import nicht mehr
-    'meta.item-access.arguments.python': Variable,
-
-    // 'meta.function-call': Structurel_Lvl1_Sub, //{fontStyle: 'bold'},
-
-    // Import JS
-    'meta.object-literal.key': Text,
-    'meta.object-literal.key': Text,
-    'meta.import.js': Text, // to keep colors the same
-    'keyword.control.import': {color: Text, fontStyle: 'bold'},
-    'keyword.control.from.js': {color: Text, fontStyle: 'bold'},
-
-
-    // 'meta.parameters': Parameter,
-    'keyword.control.conditional.js': {color: Keyword, fontStyle: 'bold'},
-    // Korrekturen
-    // 'storage.type.function.js': {fontStyle: 'normal'},
-    'meta.definition.function.js': {fontStyle: 'bold'},
-    // 'meta.var.expr.js': {fontStyle: 'italic'},
-    'storage.type.js':  {color: Keyword, fontStyle: 'bold'},
-
-
-    "punctuation.definition.block.js": Structure,
-
-
-    // HTML
-    'entity.name.tag.html': StructureName,
-    'meta.attribute.html': Structure,
-    // 'semantic.class': Text, // Gegengewicht für Class-Ref. in Pythoncode
-    'string.quoted.double.html': HtmlStrings,
-    'text.html': Text,
-    'string.quoted.double.html': String,
-    // 'punctuation.definition.tag': "Pink",
-
-    // String & Zahlen
-    'string': String ,
-    // 'string.quoted': String,
-    'string.quoted.docstring.single': String ,
-
-    'constant.numeric': String ,
-    'constant.character.escape': StringPlaceholder,
-    'constant.character.format.placeholder': StringPlaceholder,
-
-
-    'storage.type.string': StringPlaceholder, // f in f_String
-    'meta.fstring.python': StringPlaceholder, // innerhalb {}
-
-
-
-    // 'semantic.builtinConstant': String,
-    'keyword.operator.logical': {color: Data_Lvl3, fontStyle: 'bold'},
-    // 'keyword.operator': {color: "Red", fontStyle: 'bold'},
-    'constant.language': Data_Lvl3,
-    'variable.language.special.self': Data_Lvl3,
-
-
-
-
-    // Keywords
-    'keyword.control.flow': {color: Keyword, fontStyle: 'bold'},
-    'keyword.control.conditional': {color: Keyword, fontStyle: 'bold'},
-    // 'semantic.function.builtin': Keyword, //support.function.builtin.python
-    'storage.type': Keyword, //const, f-String
-
-
-
-    // Kommentare
-    'string.quoted.multi.python': CommentsSub,
-
-    'string.quoted.docstring.multi': CommentsSub,
-    'string.quoted.docstring.single': CommentsSub,
-    'punctuation.definition.comment': CommentsSub,  // Muss sub sein, sonst beißt es sich bei js docstrings
-    'comment.block.documentation': CommentsSub,
-    'comment.line': Comments,
-    'comment.line.double-slash': Comments,
-
-    'keyword.codetag.notation': "#F44747",
-
-
-
-    // Rauschen
-    'punctuation': Punctation,
-    'punctuation.section': Punctation,
-    'punctuation.separator': Punctation,
-    // 'punctuation.section': 'black',
-    'punctuation.definition': Text,
-    'keyword.operator.arithmetic': Punctation,
-    'keyword.operator.comparison': Punctation,
-    'keyword.operator.assignment': Punctation,
-    'meta.brace.round.js': Punctation,
-
-
-    // EDITOR SELECTION
-    'source': Text,
-    'colors.editor.background': Background,
-    'colors.editor.foreground': Text,
-
-    'colors.editor.selectionBackground': Selection,
-    'colors.editor.lineHighlightBackground': Background.mix( Selection, .2),
-    'colors.editor.selectionForeground': 'black',
-    'colors.editor.selectionHighlightBackground': Background.mix( 'Yellow', .3),
-    'colors.editor.wordHighlightBackground': Background.mix( 'Yellow', .3),
-    'colors.editor.wordHighlightForeground': 'Black',
-    'colors.editor.wordHighlightBorder': '#00000000',
-    'colors.editor.wordHighlightStrongBackground': Background.mix( 'Yellow', .5),
-    'colors.editor.wordHighlightStrongBorder': "#000000FF",
-    "colors.editorBracketMatch.background": Background.mix( Selection, .8).mix('Yellow', .5),
-    "colors.editorBracketMatch.border": Background.mix( Selection, .8).mix('Yellow', .5),
-    // "colors.editorBracketHighlight.foreground1": "Red",
-    // "colors.editorBracketHighlight.foreground2": "Red",
-    // "colors.editorBracketHighlight.foreground3": "Red",
-    // "colors.editorBracketHighlight.foreground4": "Red",
-    // "colors.editorBracketHighlight.foreground5": "Red",
-    // "colors.editorBracketHighlight.foreground6": "Red",
-    // "colors.editorBracketHighlight.unexpectedBracket.foreground": "Red",
-    // "colors.editorBracketPairGuide.activeBackground1": "Red",
-    // "colors.editorBracketPairGuide.activeBackground2": "Red",
-    // "colors.editorBracketPairGuide.activeBackground3": "Red",
-    // "colors.editorBracketPairGuide.activeBackground4": "Red",
-    // "colors.editorBracketPairGuide.activeBackground5": "Red",
-    // "colors.editorBracketPairGuide.activeBackground6": "Red",
-    // "colors.editorBracketPairGuide.background1": "Red",
-    // "colors.editorBracketPairGuide.background2": "Red",
-    // "colors.editorBracketPairGuide.background3": "Red",
-    // "colors.editorBracketPairGuide.background4": "Red",
-    // "colors.editorBracketPairGuide.background5": "Red",
-    // "colors.editorBracketPairGuide.background6": "Red",
-    "colors.editor.foldBackground": "#00000015",
-
-    "colors.editorCursor.foreground": Data_Lvl1,
-    // ----
-
-    // 'keyword.control': chroma('black').brighten(1.5),
-    // // 'meta.class': Structure,
-
-
-
-    // 'semantic.class': chroma(Structure).brighten(2),
-    // 'semantic.module': Data_Lvl2,
-    // // 'entity.name.namespace': chroma(Structure).brighten(2),
-
-    // "editor.findMatchBackground": "#695380",
-    // "editor.findMatchBorder": "#695380",
-    // "editor.findMatchHighlightBackground": "#69538066",
-    // "editor.findMatchHighlightBorder": "#5c467266",
-    // "editor.findRangeHighlightBackground": "#69538040",
-    // "editor.selectionBackground": "#409fff40",
-    // "editor.selectionHighlightBackground": "#87d96c26",
-    // "editor.selectionHighlightBorder": "#87d96c00",
-    // "editor.wordHighlightBackground": "#80bfff14",
-    // "editor.wordHighlightBorder": "#80bfff80",
-    // "editor.wordHighlightStrongBackground": "#87d96c14",
-    // "editor.wordHighlightStrongBorder": "#87d96c80",
-
-
-
-    "colors.editorLineNumber.activeForeground": Selection,
-    "colors.editorLineNumber.foreground": chroma(Selection).mix(Background, .5),
-
-    // "colors.scrollbar.shadow": "",
-    "colors.scrollbarSlider.background": chroma(Background).mix(UIAccent, .2),
-    "colors.scrollbarSlider.hoverBackground": chroma(Background).mix(UIAccent, .7),
-    "colors.scrollbarSlider.activeBackground": chroma(Background).mix(UIAccent, 1),
-
+const Black = 'black';
+const Transparent = '#00000000'
+
+
+const Text = "#586E75"
+format( 'source', Text );
+
+const HighlightedStructure = {color: 'hsl(340, 100%, 50%)'}
+
+// import
+format( 'keyword.control.import', Dim, bold); // import
+format( 'keyword.control.from', Dim, bold); // from
+format( 'variable.other.readwrite.alias', bold); // import {}
+format( 'constant.language.import-export-all', HighlightedStructure); // import *, pasenden zu {}
+format( 'meta.import.js', Text); // alles vom Import außer alias, sonst Farbe von Strings
+// {} sind punctuation.definition.block.js
+
+
+// # Structure
+const Structurel_Lvl1 = "hsl(325, 100%, 50%)"
+const Structurel_Lvl1_Sub = "hsl(325, 90%, 65%)"
+const Structurel_Lvl2 = "hsl(325, 80%, 70%)"
+const Structurel_Lvl3 = Text
+const StructureName = {...bold, color: Structurel_Lvl1}
+// 'entity.name.function': 'black', // überschreibt meta.definition.function
+format( 'meta.definition.function',                          Structurel_Lvl1, bold); // name of function
+format( "meta.parameters.js",                                Structurel_Lvl3      ); // somefunction(parameter)
+format( 'storage.type.function.js',                          Structurel_Lvl1_Sub  ); // function keyword
+format( 'storage.type.function.arrow.js',                    Dim                  ); // sonst farbe von storage.type.function.jsformat(
+format( "storage.type.class.python",                         Structurel_Lvl1_Sub  ); // class
+format( "meta.class.python",                                 StructureName        ); // class name
+format( "support.function.magic.python",                     Structurel_Lvl1      ); // __init__
+format( "entity.name.function.python",                       StructureName        ); // def *methodname*
+format( "storage.type.function.python",                      Structurel_Lvl1_Sub  );
+format( "variable.parameter.function-call.python" ,          Dim                  ); // def ( named_parameters)
+// neue  Variablen
+format( 'storage.type', Text); // const, let, var
+format( 'meta.definition.variable', Structurel_Lvl2);
+
+// Funktionsaufrufe
+format( 'meta.function-call.js', bold); // alle functionsaufrufe ; nicht für Python
+format( "variable.other.constant.object.js", 'normal'); // sonst überschreibt meta.function-call auch KONSTANTE.map
+
+
+
+// # Keywords / Structure
+const Keywords = {color: Text, ...bold}
+format( 'keyword.control.flow',        Keywords); // return
+format( 'keyword.control.loop',        Keywords); // for, while
+format( 'keyword.control.conditional', Keywords); // if, else
+format( 'keyword.operator.logical',    Keywords); // if, else
+format( 'keyword.operator.ternary',    Keywords); // ? :
+
+
+
+// Comments
+const CommentBlock = "hsl(175, 70%, 40%)"
+const CommentOneliner = "hsl(175, 50%, 40%)"
+format( 'comment.line',                   CommentOneliner);
+format( 'comment.line.number-sign',       CommentOneliner);
+format( 'comment.block',                  CommentBlock);
+
+const DocString = "hsl(325, 50%, 60%)"
+format( 'comment.block.documentation.js', DocString);
+
+
+// Strings
+const String = "hsl(175, 100%, 35%)"
+const StringTemplate = String
+const StringTemplatePlaceholder = "hsl(175, 80%, 30%)"
+const StringTemplatePlaceholderBrackets = HighlightedStructure
+// "meta.object-literal.key.js": 'red', // {[your_key]: 'Foo'} - andeere object keys werden überlagert von string.quoted.double
+format( 'string.quoted.double.js', String);
+format( 'string.quoted.single.js', String);
+format( 'string.quoted.single.python', String); // overwrites fstring
+format( 'meta.object-literal.key', String); // Einheitlichkeit von {"foo":..., foo:...}
+// String-Templates
+format( 'punctuation.definition.string.template', HighlightedStructure); // backticks
+format( 'punctuation.definition.template-expression', StringTemplatePlaceholderBrackets); // ${}
+format( 'meta.template.expression', StringTemplatePlaceholder); // inside ${}
+format( 'string.template', StringTemplate);
+format( "string.interpolated", StringTemplate); // overwritten in python by string.quoted
+format( "constant.character.format.placeholder.other.python", StringTemplatePlaceholderBrackets);
+format( "meta.fstring.python", StringTemplate); // whole f-String, no key for placeholder
+format( "storage.type.string.python", StringTemplatePlaceholderBrackets);
+
+// bracets and stuff
+format( 'meta.brace.round', Dim);
+format( 'punctuation.accessor', Dim);
+format( 'punctuation.separator.key-value', Dim);
+format( 'keyword.operator.assignment', Dim); // =
+format( 'keyword.operator.comparison', Dim); // ==, ===
+format( 'punctuation.definition.string.begin', Dim); // "
+format( "punctuation.definition.string.end", Dim);
+format( "meta.brace.square.js", Dim);
+format( "keyword.operator.rest.js", Dim); //...
+format( "keyword.operator.spread.js", Dim); // ...
+// objects
+format( "punctuation.definition.block.js", HighlightedStructure); //  {} all over the place
+format( "meta.parameter.object-binding-pattern", HighlightedStructure); //  {} in ({type,...other}) => {
+format( "variable.parameter.js", Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
+
+
+
+//
+//  EDITOR
+//
+const Background = chroma("#FDF6E3")
+format( 'colors.editor.background', Background);
+format( 'colors.editor.foreground', Text);
+format( "colors.editorCursor.foreground", Structurel_Lvl1 );
+format( "colors.editorCursor.background", Structurel_Lvl1_Sub );
+format( "colors.editorUnnecessaryCode.opacity", '#00000090');
+
+
+// Linenumbers / LineHighlight
+const Selection = "hsl(325, 50%, 85%)"
+const LineHighlight = '#00000010' //'#eab3df'; //chroma(Structurel_Lvl2).brighten(1).desaturate(1)
+format( "colors.editorLineNumber.activeForeground", Black);
+format( "colors.editorLineNumber.foreground",       chroma(Background).mix(Black, .15));
+format( 'colors.editor.lineHighlightBackground',    LineHighlight);
+// Selection
+format( 'colors.editor.selectionBackground',           Selection);
+format( 'colors.editor.selectionForeground',           Black);
+// id. Wörter nur für Text, JSON.... ?
+format( 'colors.editor.selectionHighlightBackground',  Transparent);
+format( 'colors.editor.selectionHighlightBorder',      Transparent);
+
+// Akt. markiertes Wort
+format( 'colors.editor.wordHighlightStrongBackground', Background.mix( Selection, .70));
+format( 'colors.editor.wordHighlightStrongForeground', Black);
+format( 'colors.editor.wordHighlightStrongBorder',     Transparent);
+format( 'colors.editor.wordHighlightBackground',       Background.mix( Selection, .50));
+format( 'colors.editor.wordHighlightForeground',       Black);
+format( 'colors.editor.wordHighlightBorder',           Transparent);
+format( "colors.editor.findMatchHighlightBackground",  Background.mix( Black, .15));
+format( "colors.editor.findMatchHighlightBorder",      Transparent);
+format( "colors.editor.findMatchBackground",           Background.mix( Black, .40));
+format( "colors.editor.findMatchBorder",               Transparent);
+format( "colors.editor.findRangeHighlightBackground",  "#69538040");
+
+// Bracket-Match
+format( "colors.editorBracketMatch.background",        Background.mix( Selection, .70));
+format( "colors.editorBracketMatch.border",            Transparent);
+
+
+// foreground = wiggle line
+format( "colors.editorInfo.background",        'hsla(60, 100%, 50%, 0.2)');
+format( "colors.editorInfo.foreground",        Transparent);
+format( "colors.editorInfo.border",            Transparent);
+
+format( "colors.editorWarning.background",     'hsla(30, 100%, 50%, 0.2)');
+format( "colors.editorWarning.foreground",     Transparent);
+format( "colors.editorWarning.border",         Transparent);
+
+format( "colors.editorError.background",       'hsla(0, 100%, 50%, 0.1)');
+format( "colors.editorError.foreground",       Transparent);
+format( "colors.editorError.border",           Transparent);
+
+format( "colors.editorLightBulb.foreground", "hsl(55, 100%, 40%)");
+format( "colors.editorLightBulbAutoFix.foreground", "hsl(200, 100%, 40%)");
+
+
+//
+// UI
+//
+
+// Scrollbars
+const UIAccent = "#AC9D57"
+format( "colors.scrollbarSlider.background",       chroma(Background).mix(UIAccent, 0.2));
+format( "colors.scrollbarSlider.hoverBackground",  chroma(Background).mix(UIAccent, 0.7));
+format( "colors.scrollbarSlider.activeBackground", chroma(Background).mix(UIAccent, 1.0));
 
 
     // "editor.button.background": Gold,
     // "editor.statusBarItem.remoteBackground": Gold,
-*/
-}
+
+
+export default theme;
 
 // https://github.com/omgovich/colord
-
 // https://culorijs.org/

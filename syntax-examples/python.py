@@ -53,18 +53,6 @@ def _get_from_cache(cache_key):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def _add_links_to_text(element):
     hyperlinks = element.find('a')
 
@@ -229,6 +217,7 @@ def _get_answer(args, link):  # pylint: disable=too-many-branches
 
     html = pq(page)
 
+    f"some f-String {html}"
     first_answer = html('.answercell').eq(0) or html('.answer').eq(0)
 
     instructions = first_answer.find('pre') or first_answer.find('code')

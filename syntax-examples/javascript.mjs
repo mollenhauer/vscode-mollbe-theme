@@ -78,6 +78,7 @@ comment bvlock
 */
 function map_other({scope, color}) {
     return {[scope]: color}
+    const fooo
 }
 
 const DEFAULT_MAPPER = {
