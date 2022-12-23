@@ -55,26 +55,69 @@ format( 'meta.import.js', Text); // alles vom Import außer alias, sonst Farbe v
 // # Structure
 const Structurel_Lvl1 = "hsl(325, 100%, 50%)"
 const Structurel_Lvl1_Sub = "hsl(325, 90%, 65%)"
-const Structurel_Lvl2 = "hsl(325, 80%, 70%)"
+const Structurel_Lvl2 = "hsl(325, 80%, 65%)"
 const Structurel_Lvl3 = Text
 const StructureName = {...bold, color: Structurel_Lvl1}
 // 'entity.name.function': 'black', // überschreibt meta.definition.function
 format( 'meta.definition.function',                          Structurel_Lvl1, bold); // name of function
+format( 'entity.name.type.class',                            Structurel_Lvl1, bold); // name of function
+format( 'entity.name.type.alias',                            Structurel_Lvl1, bold); // name of function
 format( "meta.parameters.js",                                Structurel_Lvl3      ); // somefunction(parameter)
-format( 'storage.type.function.js',                          Structurel_Lvl1_Sub  ); // function keyword
+format( 'storage.type.function',                             Structurel_Lvl1_Sub  ); // function keyword
+format( 'storage.type.type',                                 Structurel_Lvl1_Sub  ); // type keyword
+format( 'entity.name.function.decorator',                    Structurel_Lvl1_Sub  ); // type keyword
+
 format( 'storage.type.function.arrow.js',                    Dim                  ); // sonst farbe von storage.type.function.jsformat(
-format( "storage.type.class.python",                         Structurel_Lvl1_Sub  ); // class
+format( "storage.type.class",                         Structurel_Lvl1_Sub  ); // class
 format( "meta.class.python",                                 StructureName        ); // class name
 format( "support.function.magic.python",                     Structurel_Lvl1      ); // __init__
-format( "entity.name.function.python",                       StructureName        ); // def *methodname*
+format( "entity.name.function.python",                       StructureName        ); // def *methodname*, in ts also call of method
 format( "storage.type.function.python",                      Structurel_Lvl1_Sub  );
 format( "variable.parameter.function-call.python" ,          Dim                  ); // def ( named_parameters)
+format( 'storage.modifier',     Structurel_Lvl1_Sub);  // extends
+format( 'storage.type.interface',     Structurel_Lvl1_Sub);  // interface {...}
+format( 'entity.name.type.interface.tsx', Structurel_Lvl1, bold);
+format( 'keyword.control.export',      Structurel_Lvl1);
+format( 'keyword.control.default',     Structurel_Lvl1);
+// format( 'meta.var.expr', bold );
+
+format( 'meta.type.annotation.tsx', Dim);
+format( 'support.type.primitive.tsx', bold);
+format( 'meta.field.declaration.tsx', Structurel_Lvl1_Sub);
+format( 'meta.object-literal.key', Structurel_Lvl1_Sub); // {key: }
+format( 'semantic.method.declaration', Structurel_Lvl1); // render() {...}
+
+
 // neue  Variablen
-format( 'storage.type', Text); // const, let, var
 format( 'meta.definition.variable', Structurel_Lvl2);
+format( 'semantic.variable.declaration', Structurel_Lvl2);
+format( 'semantic.property.declaration', Structurel_Lvl2); // key in type Foo { bar..}
+// format( 'meta.class.tsx', Structurel_Lvl1, bold);
+format( 'meta.parameters', Structurel_Lvl1, 'normal');
+// format( 'storage.type', Text); // const, let, var
+
+//html
+const tag1 = 'hsl(325, 40%, 40%)'
+const tag2 = 'hsl(325, 30%, 60%)'
+const tag3 = 'hsl(325, 20%, 40%)'
+format( 'entity.name.tag', tag1, bold);
+format( 'punctuation.definition.tag.begin.tsx', tag1, bold);
+format( 'punctuation.definition.tag.begin.html', tag1, bold);
+format( 'punctuation.definition.tag.end.tsx', tag1, bold);
+format( 'punctuation.definition.tag.end.html', tag1, bold);
+format( 'entity.other.attribute-name', tag2);
+format( 'string.quoted.double.html', tag3);
+format( 'string.quoted.double.tsx', tag3);
+
+// objects
+format( "punctuation.definition.block", HighlightedStructure); //  {} all over the place
+format( "meta.parameter.object-binding-pattern", HighlightedStructure); //  {} in ({type,...other}) => {
+format( "variable.parameter.js", Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
+
 
 // Funktionsaufrufe
-format( 'meta.function-call.js', bold); // alle functionsaufrufe ; nicht für Python
+// format( 'meta.function-call.js', bold); // alle functionsaufrufe ; nicht für Python
+// format( "entity.name.function", bold);
 format( "variable.other.constant.object.js", 'normal'); // sonst überschreibt meta.function-call auch KONSTANTE.map
 
 
@@ -84,8 +127,10 @@ const Keywords = {color: Text, ...bold}
 format( 'keyword.control.flow',        Keywords); // return
 format( 'keyword.control.loop',        Keywords); // for, while
 format( 'keyword.control.conditional', Keywords); // if, else
-format( 'keyword.operator.logical',    Keywords); // if, else
+format( 'keyword.control.switch',      Keywords); // if, else
+format( 'keyword.operator.logical',    Keywords); // and, or, ||
 format( 'keyword.operator.ternary',    Keywords); // ? :
+
 
 
 
@@ -105,11 +150,9 @@ const String = "hsl(175, 100%, 35%)"
 const StringTemplate = String
 const StringTemplatePlaceholder = "hsl(175, 80%, 30%)"
 const StringTemplatePlaceholderBrackets = HighlightedStructure
-// "meta.object-literal.key.js": 'red', // {[your_key]: 'Foo'} - andeere object keys werden überlagert von string.quoted.double
-format( 'string.quoted.double.js', String);
-format( 'string.quoted.single.js', String);
-format( 'string.quoted.single.python', String); // overwrites fstring
-format( 'meta.object-literal.key', String); // Einheitlichkeit von {"foo":..., foo:...}
+format( 'string.quoted.double', String);
+format( 'string.quoted.single', String);
+
 // String-Templates
 format( 'punctuation.definition.string.template', HighlightedStructure); // backticks
 format( 'punctuation.definition.template-expression', StringTemplatePlaceholderBrackets); // ${}
@@ -119,6 +162,7 @@ format( "string.interpolated", StringTemplate); // overwritten in python by stri
 format( "constant.character.format.placeholder.other.python", StringTemplatePlaceholderBrackets);
 format( "meta.fstring.python", StringTemplate); // whole f-String, no key for placeholder
 format( "storage.type.string.python", StringTemplatePlaceholderBrackets);
+//format( "meta.embedded.expression.tsx", StringTemplatePlaceholderBrackets); // {your_variable} aber auch alles da drin
 
 // bracets and stuff
 format( 'meta.brace.round', Dim);
@@ -131,10 +175,6 @@ format( "punctuation.definition.string.end", Dim);
 format( "meta.brace.square.js", Dim);
 format( "keyword.operator.rest.js", Dim); //...
 format( "keyword.operator.spread.js", Dim); // ...
-// objects
-format( "punctuation.definition.block.js", HighlightedStructure); //  {} all over the place
-format( "meta.parameter.object-binding-pattern", HighlightedStructure); //  {} in ({type,...other}) => {
-format( "variable.parameter.js", Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
 
 
 
@@ -146,11 +186,12 @@ format( 'colors.editor.background', Background);
 format( 'colors.editor.foreground', Text);
 format( "colors.editorCursor.foreground", Structurel_Lvl1 );
 format( "colors.editorCursor.background", Structurel_Lvl1_Sub );
-format( "colors.editorUnnecessaryCode.opacity", '#00000090');
+format( "colors.editorUnnecessaryCode.opacity", '#00000020');
 
 
 // Linenumbers / LineHighlight
-const Selection = "hsl(325, 50%, 85%)"
+const Selection = "hsl(325, 40%, 80%)"
+const wordHighlight = "hsl(60, 80%, 60%)"
 const LineHighlight = '#00000010' //'#eab3df'; //chroma(Structurel_Lvl2).brighten(1).desaturate(1)
 format( "colors.editorLineNumber.activeForeground", Black);
 format( "colors.editorLineNumber.foreground",       chroma(Background).mix(Black, .15));
@@ -163,10 +204,10 @@ format( 'colors.editor.selectionHighlightBackground',  Transparent);
 format( 'colors.editor.selectionHighlightBorder',      Transparent);
 
 // Akt. markiertes Wort
-format( 'colors.editor.wordHighlightStrongBackground', Background.mix( Selection, .70));
+format( 'colors.editor.wordHighlightStrongBackground', wordHighlight);
 format( 'colors.editor.wordHighlightStrongForeground', Black);
 format( 'colors.editor.wordHighlightStrongBorder',     Transparent);
-format( 'colors.editor.wordHighlightBackground',       Background.mix( Selection, .50));
+format( 'colors.editor.wordHighlightBackground',       Background.mix( wordHighlight, .50));
 format( 'colors.editor.wordHighlightForeground',       Black);
 format( 'colors.editor.wordHighlightBorder',           Transparent);
 format( "colors.editor.findMatchHighlightBackground",  Background.mix( Black, .15));
@@ -176,7 +217,7 @@ format( "colors.editor.findMatchBorder",               Transparent);
 format( "colors.editor.findRangeHighlightBackground",  "#69538040");
 
 // Bracket-Match
-format( "colors.editorBracketMatch.background",        Background.mix( Selection, .70));
+format( "colors.editorBracketMatch.background",        Background.mix( wordHighlight, .70));
 format( "colors.editorBracketMatch.border",            Transparent);
 
 
@@ -189,7 +230,7 @@ format( "colors.editorWarning.background",     'hsla(30, 100%, 50%, 0.2)');
 format( "colors.editorWarning.foreground",     Transparent);
 format( "colors.editorWarning.border",         Transparent);
 
-format( "colors.editorError.background",       'hsla(0, 100%, 50%, 0.1)');
+format( "colors.editorError.background",       'rgba(255, 0, 0, 0.3)');
 format( "colors.editorError.foreground",       Transparent);
 format( "colors.editorError.border",           Transparent);
 

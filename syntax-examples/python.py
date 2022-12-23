@@ -66,7 +66,7 @@ def _add_links_to_text(element):
             replacement = f'[{copy}]({href})'
         pquery_object.replace_with(replacement)
 
-
+@cache
 def get_text(element):
     ''' return inner text in pyquery element '''
     _add_links_to_text(element)
