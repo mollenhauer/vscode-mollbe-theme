@@ -254,6 +254,3 @@ format( "colors.scrollbarSlider.activeBackground", chroma(Background).mix(UIAcce
 
 
 export default theme;
-
-// https://github.com/omgovich/colord
-// https://culorijs.org/

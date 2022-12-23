@@ -57,7 +57,7 @@ def _add_links_to_text(element):
     hyperlinks = element.find('a')
 
     for hyperlink in hyperlinks:
-        pquery_object = pq(hyperlink)
+        pquery_object = hyperlink
         href = hyperlink.attrib['href']
         copy = pquery_object.text()
         if copy == href:

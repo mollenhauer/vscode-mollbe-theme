@@ -1,9 +1,18 @@
 # mollbe Theme for VS Code
 
+<br>
+
+
+## 💾 Download
+Get it from [VS Code Marketplace: mollbe Theme](https://marketplace.visualstudio.com/items?itemName=mollenhauer.mollbe-theme)
 
 ## 🎯 Focus
 Theme focuses on two aspects:
-* 🎶 Semantic highlighting
+* 🎶 Light Theme with focus of revealing the structure of your code.
+![Screenshot of Theme][screenshot]
+
+
+
 * 🎨 Process of building a theme:
   * Live Preview
   * Easy reuse of existent VS Code Themes via merging into *.jsonc
@@ -14,38 +23,19 @@ Theme focuses on two aspects:
 ## Example of configuration:
 ### src/syntax_highlighting.mjs
 ```javascript
-const base_Structure = chroma.hsl(46+180, .65, .52)
-const Structure_Lvl1 = base_Structure
-const Structure_Lvl2 = base_Structure.desaturate(1)
-// ...
-const Gold = chroma.hsl(46, .65, .52)
-const Selection = Gold.set('hsl.h', 46-90).brighten(2.0).desaturate(2)
-// ...
-const to_parse_colors = [
-    // "semantic" prefix for semantic scopes
-    'semantic.class.declaration', Structure_Lvl1,
-    // ...
-    // no prefix for textmate scopes
-    'storage.type.class', Structure_Lvl2,
-    'entity.name.function.python': {color: Structure_Lvl2, fontStyle: 'bold'},
-    // color is optional:
-    'entity.name.function.python': {fontStyle: 'bold'},
-    // ...
-    // "colors" prefix will set editor colors
-    'colors.editor.selectionBackground', Selection,
-]
+const [theme, format] = createTemplate()
+const Structurel_Lvl1 = "hsl(325, 100%, 50%)"
+format( 'entity.name.type.class', Structurel_Lvl1, bold);
 ```
+
 `src/syntax_highlighting.mjs` will get build and merged into everything `src/*.jsonc`. So reuse of compiled VS Code Themes is easy.
 
+You could also incorporate any JavaScript color library [chroma](https://github.com/gka/chroma.js/), [colord](https://github.com/omgovich/colord) or [culori](https://culorijs.org/)
+
+
+
 ---
 
-<!---
-
-## ⭐ Download
-Get it from [VS Code Marketplace](https://)
----
-
---->
 
 # How to Work
 
@@ -76,9 +66,10 @@ npm run publish
 ```
 
 ## 🎮 Install extension
+* Get it from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=mollenhauer.mollbe-theme)
 * To start using your extension with Visual Studio Code copy it into the `<user home>/.vscode/extensions` folder and restart Code.
-
 
 
 [swatches]: screenshots/swatches.png
 [development]: screenshots/Extension_Development_Host.png
+[screenshot]: screenshots/Screenshot%202022-12-23.png
