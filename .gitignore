@@ -3,3 +3,4 @@ node_modules
 *.*secret
 settings.example.
 *.ignore
+vsc-extension-quickstart.md

@@ -52,6 +52,8 @@ function parseConfig( raw_scope, color_or_obj) {
             color: color,
             fontStyle: fontStyle,
         }
+    } else if (color_or_obj === null ) {
+
     } else {
         try {
             const color = parseColor(color_or_obj)

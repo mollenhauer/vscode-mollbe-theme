@@ -1,6 +1,6 @@
 import chroma from "chroma-js"
 
-function createTemplate() {
+function createTheme() {
     const theme = {}
     const chromaPrototype = Object.getPrototypeOf(chroma('red'))
     function format(name, ...properties) {
@@ -23,19 +23,24 @@ function createTemplate() {
                 {}
             )
         }
-        const props = parseProperties(properties)
-        theme[name] = props
-        return props
+        if (properties[0] === null) {
+            theme[name] = null
+            return null
+        } else {
+            const props = parseProperties(properties)
+            theme[name] = props
+            return props
+        }
     }
     return [theme, format]
 }
-const [theme, format] = createTemplate()
+const [theme, format] = createTheme()
 
 
-const Dim = {color: "#586E7580"}
+const Dim = {color: "hsla(194, 32%, 32%, 0.6)"}
 const bold = {fontStyle: 'bold'}
 const Black = 'black';
-const Transparent = '#00000000'
+const Transparent = '#ffffff00'
 
 
 const Text = "#586E75"
@@ -186,7 +191,9 @@ format( 'colors.editor.background', Background);
 format( 'colors.editor.foreground', Text);
 format( "colors.editorCursor.foreground", Structurel_Lvl1 );
 format( "colors.editorCursor.background", Structurel_Lvl1_Sub );
-format( "colors.editorUnnecessaryCode.opacity", '#00000020');
+format( "colors.editorUnnecessaryCode.opacity", '#00000090');
+format( "colors.editorUnnecessaryCode.border", Transparent);
+format( "semantic.searchEditor.findMatchBorder", Transparent);
 
 
 // Linenumbers / LineHighlight
@@ -194,27 +201,31 @@ const Selection = "hsl(325, 40%, 80%)"
 const wordHighlight = "hsl(60, 80%, 60%)"
 const LineHighlight = '#00000010' //'#eab3df'; //chroma(Structurel_Lvl2).brighten(1).desaturate(1)
 format( "colors.editorLineNumber.activeForeground", Black);
-format( "colors.editorLineNumber.foreground",       chroma(Background).mix(Black, .15));
+format( "colors.editorLineNumber.foreground",       Background.mix(Black, .15));
 format( 'colors.editor.lineHighlightBackground',    LineHighlight);
+// format( 'colors.editor.lineHighlightBorder',        Transparent);
 // Selection
 format( 'colors.editor.selectionBackground',           Selection);
 format( 'colors.editor.selectionForeground',           Black);
+format( 'colors.editor.findRangeHighlightBackground',  chroma(Selection).alpha(.2) );
+
 // id. Wörter nur für Text, JSON.... ?
 format( 'colors.editor.selectionHighlightBackground',  Transparent);
 format( 'colors.editor.selectionHighlightBorder',      Transparent);
 
 // Akt. markiertes Wort
 format( 'colors.editor.wordHighlightStrongBackground', wordHighlight);
-format( 'colors.editor.wordHighlightStrongForeground', Black);
-format( 'colors.editor.wordHighlightStrongBorder',     Transparent);
-format( 'colors.editor.wordHighlightBackground',       Background.mix( wordHighlight, .50));
-format( 'colors.editor.wordHighlightForeground',       Black);
+// format( 'colors.editor.wordHighlightStrongForeground', Black);
+format( 'colors.editor.wordHighlightStrongBorder',     'red');
+format( 'colors.editor.wordHighlightBackground',       Background.mix( wordHighlight, .50) );
+// format( 'colors.editor.wordHighlightForeground',       Black);
 format( 'colors.editor.wordHighlightBorder',           Transparent);
-format( "colors.editor.findMatchHighlightBackground",  Background.mix( Black, .15));
+format( "colors.editor.findMatchBackground",           Background.mix( Selection, 1.0)); // selected match (F3)
+format( "colors.editor.findMatchHighlightBackground",  Background.mix( wordHighlight, .60) ); // all occ
 format( "colors.editor.findMatchHighlightBorder",      Transparent);
-format( "colors.editor.findMatchBackground",           Background.mix( Black, .40));
 format( "colors.editor.findMatchBorder",               Transparent);
-format( "colors.editor.findRangeHighlightBackground",  "#69538040");
+format( "colors.editor.findRangeHighlightBackground",  chroma(Selection).alpha(.3)  );
+format( "colors.editor.findRangeHighlightBorder",      Transparent);
 
 // Bracket-Match
 format( "colors.editorBracketMatch.background",        Background.mix( wordHighlight, .70));
@@ -226,11 +237,11 @@ format( "colors.editorInfo.background",        'hsla(60, 100%, 50%, 0.2)');
 format( "colors.editorInfo.foreground",        Transparent);
 format( "colors.editorInfo.border",            Transparent);
 
-format( "colors.editorWarning.background",     'hsla(30, 100%, 50%, 0.2)');
+format( "colors.editorWarning.background",     'hsla(30, 100%, 50%, 0.12)');
 format( "colors.editorWarning.foreground",     Transparent);
 format( "colors.editorWarning.border",         Transparent);
 
-format( "colors.editorError.background",       'rgba(255, 0, 0, 0.3)');
+format( "colors.editorError.background",       'rgba(255, 0, 0, 0.12)');
 format( "colors.editorError.foreground",       Transparent);
 format( "colors.editorError.border",           Transparent);
 
@@ -249,8 +260,6 @@ format( "colors.scrollbarSlider.hoverBackground",  chroma(Background).mix(UIAcce
 format( "colors.scrollbarSlider.activeBackground", chroma(Background).mix(UIAccent, 1.0));
 
 
-    // "editor.button.background": Gold,
-    // "editor.statusBarItem.remoteBackground": Gold,
 
 
 export default theme;

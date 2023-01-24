@@ -9,6 +9,7 @@
     "buildOutput": "mollbe-theme/themes/mollbe-theme.json"
   },
   "dependencies": {
+    "@mollbe/theme-compiler": "^0.0.1",
     "@svgdotjs/svg.js": "^3.1.2",
     "chroma-js": "^2.4.2",
     "deepmerge": "^4.2.2",
@@ -21,10 +22,13 @@
     "vsce": "^2.15.0"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "package": "cd mollbe-theme; node ../node_modules/vsce/vsce package",
-    "publish": "cd mollbe-theme; node ../node_modules/vsce/vsce publish --baseImagesUrl \"https://raw.githubusercontent.com/mollenhauer/vscode-mollbe-theme/main/\"",
+    "build": "npx --no-install ts-node ./theme/mollbe.ts > ./mollbe-theme/themes/mollbe-theme.json",
+    "package": "cd mollbe-theme; npx --no-install vsce package",
+    "publish": "cd mollbe-theme; npx --no-install vsce publish --baseImagesUrl \"https://raw.githubusercontent.com/mollenhauer/vscode-mollbe-theme/main/\"",
     "dev": "nodemon --watch ./src --watch ./build.mjs --ext mjs,json,jsonc build.mjs -- theme",
     "swatches": "node swatches.mjs \"%npm_package_config_buildOutput%\" > swatches.html"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
   }
 }
