@@ -2,7 +2,7 @@
     "name": "mollbe-theme",
     "displayName": "mollbe Theme",
     "description": "",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/mollenhauer/vscode-mollbe-theme/tree/main"
@@ -28,6 +28,5 @@
             "editor.semanticHighlighting.enabled": true
         }
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }

@@ -1,40 +1,15 @@
-import chroma from "chroma-js"
+import { Theme, tinycolor2 as color } from "@mollbe/theme-compiler";
+import path from 'path'
 
-function createTheme() {
-    const theme = {}
-    const chromaPrototype = Object.getPrototypeOf(chroma('red'))
-    function format(name, ...properties) {
-        function parseProperties(props) {
-            const isPlainObject = value => value?.constructor === Object;
-            const isChroma = o => Object.getPrototypeOf(o) === chromaPrototype
-            const parsedProps = props.map( p => {
-                if (typeof p === 'string' && (p == 'normal'||p == 'bold'||p == 'italic'||p == 'underline') ) {
-                    return {fontStyle: p}
-                } else if (typeof p === 'string' ) {
-                    return {color: p}
-                } else if ( isPlainObject(p) ) {
-                    return p
-                } else if ( isChroma(p) ) {
-                    return {color: p.hex()}
-                }
-            })
-            return parsedProps.reduce(
-                (acc, val) => Object.assign(acc, val),
-                {}
-            )
-        }
-        if (properties[0] === null) {
-            theme[name] = null
-            return null
-        } else {
-            const props = parseProperties(properties)
-            theme[name] = props
-            return props
-        }
-    }
-    return [theme, format]
-}
-const [theme, format] = createTheme()
+const [theme, format] = Theme.create(
+    [
+        'base.jsonc',
+        'semantic.jsonc',
+        'type_light.jsonc',
+        'solarized_light.jsonc',
+        'terminal_dark.jsonc',
+    ].map( f => path.join(__dirname, 'includes', f ))
+)
 
 
 const Dim = {color: "hsla(194, 32%, 32%, 0.6)"}
@@ -64,41 +39,44 @@ const Structurel_Lvl2 = "hsl(325, 80%, 65%)"
 const Structurel_Lvl3 = Text
 const StructureName = {...bold, color: Structurel_Lvl1}
 // 'entity.name.function': 'black', // überschreibt meta.definition.function
-format( 'meta.definition.function',                          Structurel_Lvl1, bold); // name of function
-format( 'entity.name.type.class',                            Structurel_Lvl1, bold); // name of function
-format( 'entity.name.type.alias',                            Structurel_Lvl1, bold); // name of function
-format( "meta.parameters.js",                                Structurel_Lvl3      ); // somefunction(parameter)
-format( 'storage.type.function',                             Structurel_Lvl1_Sub  ); // function keyword
-format( 'storage.type.type',                                 Structurel_Lvl1_Sub  ); // type keyword
-format( 'entity.name.function.decorator',                    Structurel_Lvl1_Sub  ); // type keyword
+format( 'meta.definition.function',                   Structurel_Lvl1, bold); // name of function
+// format( 'entity.name.type.class',                     Structurel_Lvl1, bold); // name of function -- highlights very occurance
+format( 'entity.name.type.alias',                     Structurel_Lvl1, bold); // name of function
+// format( 'semantic.function.declaration',              Structurel_Lvl1, bold); // name of function
+// format( 'semantic.class.declaration',                 Structurel_Lvl1, bold); // name of class // highlights whole line
+format( "meta.parameters.js",                         Structurel_Lvl3      ); // somefunction(parameter)
+format( 'storage.type.function',                      Structurel_Lvl1_Sub  ); // function keyword
+format( 'storage.type.type',                          Structurel_Lvl1_Sub  ); // type keyword
+format( 'entity.name.function.decorator',             Structurel_Lvl1_Sub  ); // type keyword
 
-format( 'storage.type.function.arrow.js',                    Dim                  ); // sonst farbe von storage.type.function.jsformat(
+format( 'storage.type.function.arrow.js',             Dim                  ); // sonst farbe von storage.type.function.jsformat(
 format( "storage.type.class",                         Structurel_Lvl1_Sub  ); // class
-format( "meta.class.python",                                 StructureName        ); // class name
-format( "support.function.magic.python",                     Structurel_Lvl1      ); // __init__
-format( "entity.name.function.python",                       StructureName        ); // def *methodname*, in ts also call of method
-format( "storage.type.function.python",                      Structurel_Lvl1_Sub  );
-format( "variable.parameter.function-call.python" ,          Dim                  ); // def ( named_parameters)
-format( 'storage.modifier',     Structurel_Lvl1_Sub);  // extends
-format( 'storage.type.interface',     Structurel_Lvl1_Sub);  // interface {...}
-format( 'entity.name.type.interface.tsx', Structurel_Lvl1, bold);
-format( 'keyword.control.export',      Structurel_Lvl1);
-format( 'keyword.control.default',     Structurel_Lvl1);
+format( "meta.class.python",                          StructureName        ); // class name
+format( "support.function.magic.python",              Structurel_Lvl1      ); // __init__
+format( "entity.name.function.python",                StructureName        ); // def *methodname*, in ts also call of method
+format( "storage.type.function.python",               Structurel_Lvl1_Sub  );
+format( "variable.parameter.function-call.python" ,   Dim                  ); // def ( named_parameters)
+format( 'storage.modifier',                           Structurel_Lvl1_Sub);  // extends
+format( 'storage.type.interface',                     Structurel_Lvl1_Sub);  // interface {...}
+format( 'entity.name.type.interface.tsx',             Structurel_Lvl1, bold);
+format( 'entity.name.type.interface.ts',              Structurel_Lvl1, bold);
+format( 'keyword.control.export',                     Structurel_Lvl1_Sub);
+format( 'keyword.control.default',                    Structurel_Lvl1);
 // format( 'meta.var.expr', bold );
 
-format( 'meta.type.annotation.tsx', Dim);
-format( 'support.type.primitive.tsx', bold);
-format( 'meta.field.declaration.tsx', Structurel_Lvl1_Sub);
-format( 'meta.object-literal.key', Structurel_Lvl1_Sub); // {key: }
-format( 'semantic.method.declaration', Structurel_Lvl1); // render() {...}
+format( 'meta.type.annotation.tsx',    Dim);
+format( 'support.type.primitive.tsx',  bold);
+format( 'meta.field.declaration.tsx',  Structurel_Lvl1_Sub);
+format( 'meta.object-literal.key',     Structurel_Lvl1_Sub); // {key: }
+// format( 'semantic.method.declaration', Structurel_Lvl1); // render() {...}
 
 
 // neue  Variablen
-format( 'meta.definition.variable', Structurel_Lvl2);
+format( 'meta.definition.variable',      Structurel_Lvl2);
 format( 'semantic.variable.declaration', Structurel_Lvl2);
 format( 'semantic.property.declaration', Structurel_Lvl2); // key in type Foo { bar..}
 // format( 'meta.class.tsx', Structurel_Lvl1, bold);
-format( 'meta.parameters', Structurel_Lvl1, 'normal');
+format( 'meta.parameters',               Structurel_Lvl1_Sub, 'normal');
 // format( 'storage.type', Text); // const, let, var
 
 //html
@@ -115,9 +93,9 @@ format( 'string.quoted.double.html', tag3);
 format( 'string.quoted.double.tsx', tag3);
 
 // objects
-format( "punctuation.definition.block", HighlightedStructure); //  {} all over the place
-format( "meta.parameter.object-binding-pattern", HighlightedStructure); //  {} in ({type,...other}) => {
-format( "variable.parameter.js", Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
+format( "punctuation.definition.block",          HighlightedStructure); //  {} all over the place
+format( "meta.parameter.object-binding-pattern", Structurel_Lvl1_Sub); //  {} in ({type,...other}) => {
+format( "variable.parameter.js",                 Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
 
 
 // Funktionsaufrufe
@@ -151,7 +129,7 @@ format( 'comment.block.documentation.js', DocString);
 
 
 // Strings
-const String = "hsl(175, 100%, 35%)"
+const String = "hsl( 96, 100%, 35%)"
 const StringTemplate = String
 const StringTemplatePlaceholder = "hsl(175, 80%, 30%)"
 const StringTemplatePlaceholderBrackets = HighlightedStructure
@@ -186,7 +164,7 @@ format( "keyword.operator.spread.js", Dim); // ...
 //
 //  EDITOR
 //
-const Background = chroma("#FDF6E3")
+const Background = color("#FDF6E3")
 format( 'colors.editor.background', Background);
 format( 'colors.editor.foreground', Text);
 format( "colors.editorCursor.foreground", Structurel_Lvl1 );
@@ -199,15 +177,15 @@ format( "semantic.searchEditor.findMatchBorder", Transparent);
 // Linenumbers / LineHighlight
 const Selection = "hsl(325, 40%, 80%)"
 const wordHighlight = "hsl(60, 80%, 60%)"
-const LineHighlight = '#00000010' //'#eab3df'; //chroma(Structurel_Lvl2).brighten(1).desaturate(1)
+const LineHighlight = '#00000010'
 format( "colors.editorLineNumber.activeForeground", Black);
-format( "colors.editorLineNumber.foreground",       Background.mix(Black, .15));
+format( "colors.editorLineNumber.foreground",       color.mix(Background, Black, 15));
 format( 'colors.editor.lineHighlightBackground',    LineHighlight);
 // format( 'colors.editor.lineHighlightBorder',        Transparent);
 // Selection
 format( 'colors.editor.selectionBackground',           Selection);
 format( 'colors.editor.selectionForeground',           Black);
-format( 'colors.editor.findRangeHighlightBackground',  chroma(Selection).alpha(.2) );
+format( 'colors.editor.findRangeHighlightBackground',  color(Selection).setAlpha(20) );
 
 // id. Wörter nur für Text, JSON.... ?
 format( 'colors.editor.selectionHighlightBackground',  Transparent);
@@ -217,18 +195,18 @@ format( 'colors.editor.selectionHighlightBorder',      Transparent);
 format( 'colors.editor.wordHighlightStrongBackground', wordHighlight);
 // format( 'colors.editor.wordHighlightStrongForeground', Black);
 format( 'colors.editor.wordHighlightStrongBorder',     'red');
-format( 'colors.editor.wordHighlightBackground',       Background.mix( wordHighlight, .50) );
+format( 'colors.editor.wordHighlightBackground',       color.mix( Background, wordHighlight, 50) );
 // format( 'colors.editor.wordHighlightForeground',       Black);
 format( 'colors.editor.wordHighlightBorder',           Transparent);
-format( "colors.editor.findMatchBackground",           Background.mix( Selection, 1.0)); // selected match (F3)
-format( "colors.editor.findMatchHighlightBackground",  Background.mix( wordHighlight, .60) ); // all occ
+format( "colors.editor.findMatchBackground",           color.mix( Background, Selection, 100)); // selected match (F3)
+format( "colors.editor.findMatchHighlightBackground",  color.mix( Background, wordHighlight, 60) ); // all occ
 format( "colors.editor.findMatchHighlightBorder",      Transparent);
 format( "colors.editor.findMatchBorder",               Transparent);
-format( "colors.editor.findRangeHighlightBackground",  chroma(Selection).alpha(.3)  );
-format( "colors.editor.findRangeHighlightBorder",      Transparent);
+format( "colors.editor.findRangeHighlightBackground",  color(Selection).setAlpha(.3)  );
+format( "colors.editor.findRangeHighlightBorder",      'red');
 
 // Bracket-Match
-format( "colors.editorBracketMatch.background",        Background.mix( wordHighlight, .70));
+format( "colors.editorBracketMatch.background",        color.mix( Background, wordHighlight, 70));
 format( "colors.editorBracketMatch.border",            Transparent);
 
 
@@ -255,11 +233,11 @@ format( "colors.editorLightBulbAutoFix.foreground", "hsl(200, 100%, 40%)");
 
 // Scrollbars
 const UIAccent = "#AC9D57"
-format( "colors.scrollbarSlider.background",       chroma(Background).mix(UIAccent, 0.2));
-format( "colors.scrollbarSlider.hoverBackground",  chroma(Background).mix(UIAccent, 0.7));
-format( "colors.scrollbarSlider.activeBackground", chroma(Background).mix(UIAccent, 1.0));
+format( "colors.scrollbarSlider.background",       color.mix(Background, UIAccent,  20));
+format( "colors.scrollbarSlider.hoverBackground",  color.mix(Background, UIAccent,  70));
+format( "colors.scrollbarSlider.activeBackground", color.mix(Background, UIAccent, 100));
 
 
-
-
-export default theme;
+console.log(
+    theme.output()
+);

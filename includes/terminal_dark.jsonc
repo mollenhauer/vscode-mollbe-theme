@@ -1,6 +1,4 @@
 {
-	"$schema": "vscode://schemas/color-theme",
-	"type": "dark",
 	"colors": {
 		"terminal.ansiBlack": "#171b24",
 		"terminal.ansiBlue": "#6dcbfa",
@@ -19,6 +17,6 @@
 		"terminal.ansiWhite": "#c7c7c7",
 		"terminal.ansiYellow": "#facc6e",
 		"terminal.background": "#1f2430",
-		"terminal.foreground": "#cccac2",
+		"terminal.foreground": "#cccac2"
 	}
 }
