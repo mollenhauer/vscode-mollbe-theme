@@ -113,14 +113,16 @@
     "editorWarning.background": "#ff80001f",
     "editorWarning.foreground": "#ffffff00",
     "editorWarning.border": "#ffffff00",
-    "editorError.background": "#ff00001f",
+    "editorError.background": "#ff00001a",
     "editorError.foreground": "#ffffff00",
     "editorError.border": "#ffffff00",
     "editorLightBulb.foreground": "#ccbb00",
     "editorLightBulbAutoFix.foreground": "#0088cc",
     "scrollbarSlider.background": "#ede4c7",
     "scrollbarSlider.hoverBackground": "#c4b881",
-    "scrollbarSlider.activeBackground": "#ac9d57"
+    "scrollbarSlider.activeBackground": "#ac9d57",
+    "gitDecoration.modifiedResourceForeground": "#bf408a",
+    "gitDecoration.untrackedResourceForeground": "#ff0095"
   },
   "tokenColors": [
     {
@@ -169,16 +171,17 @@
       }
     },
     {
-      "scope": "entity.name.type.alias",
+      "scope": "meta.definition.method",
       "settings": {
         "foreground": "#ff0095",
         "fontStyle": "bold"
       }
     },
     {
-      "scope": "meta.parameters.js",
+      "scope": "entity.name.type.alias",
       "settings": {
-        "foreground": "#586e75"
+        "foreground": "#ff0095",
+        "fontStyle": "bold"
       }
     },
     {
@@ -196,7 +199,13 @@
     {
       "scope": "entity.name.function.decorator",
       "settings": {
-        "foreground": "#f655b3"
+        "foreground": "#b87a9d"
+      }
+    },
+    {
+      "scope": "meta.function.decorator",
+      "settings": {
+        "foreground": "#b87a9d"
       }
     },
     {
@@ -221,7 +230,8 @@
     {
       "scope": "support.function.magic.python",
       "settings": {
-        "foreground": "#ff0095"
+        "foreground": "#ff0095",
+        "fontStyle": "bold"
       }
     },
     {
@@ -300,22 +310,9 @@
       }
     },
     {
-      "scope": "meta.object-literal.key",
-      "settings": {
-        "foreground": "#f655b3"
-      }
-    },
-    {
       "scope": "meta.definition.variable",
       "settings": {
-        "foreground": "#ed5eb2"
-      }
-    },
-    {
-      "scope": "meta.parameters",
-      "settings": {
-        "foreground": "#f655b3",
-        "fontStyle": "normal"
+        "foreground": "#bf408a"
       }
     },
     {
@@ -378,15 +375,9 @@
       }
     },
     {
-      "scope": "meta.parameter.object-binding-pattern",
-      "settings": {
-        "foreground": "#f655b3"
-      }
-    },
-    {
       "scope": "variable.parameter.js",
       "settings": {
-        "foreground": "#ed5eb2"
+        "foreground": "#bf408a"
       }
     },
     {
@@ -464,13 +455,13 @@
     {
       "scope": "string.quoted.double",
       "settings": {
-        "foreground": "#47b300"
+        "foreground": "#54c20a"
       }
     },
     {
       "scope": "string.quoted.single",
       "settings": {
-        "foreground": "#47b300"
+        "foreground": "#54c20a"
       }
     },
     {
@@ -488,19 +479,19 @@
     {
       "scope": "meta.template.expression",
       "settings": {
-        "foreground": "#0f8a80"
+        "foreground": "#89eb47"
       }
     },
     {
       "scope": "string.template",
       "settings": {
-        "foreground": "#47b300"
+        "foreground": "#54c20a"
       }
     },
     {
       "scope": "string.interpolated",
       "settings": {
-        "foreground": "#47b300"
+        "foreground": "#54c20a"
       }
     },
     {
@@ -512,7 +503,7 @@
     {
       "scope": "meta.fstring.python",
       "settings": {
-        "foreground": "#47b300"
+        "foreground": "#54c20a"
       }
     },
     {
@@ -580,11 +571,23 @@
       "settings": {
         "foreground": "#37606c99"
       }
+    },
+    {
+      "scope": "meta.object-literal.key",
+      "settings": {
+        "foreground": "#54c20a"
+      }
+    },
+    {
+      "scope": "meta.definition.property",
+      "settings": {
+        "foreground": "#54c20a"
+      }
     }
   ],
   "semanticTokenColors": {
-    "variable.declaration": "#ed5eb2",
-    "property.declaration": "#ed5eb2",
+    "variable.declaration": "#bf408a",
+    "parameter": "#f655b3",
     "searchEditor.findMatchBorder": "#ffffff00"
   }
 }

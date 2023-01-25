@@ -27,9 +27,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mollbe/theme-compiler@file:../theme-compiler":
-  version "0.0.3"
-  resolved "file:../theme-compiler"
+"@mollbe/theme-compiler@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@mollbe/theme-compiler/-/theme-compiler-0.0.6.tgz"
+  integrity sha512-jzl2njo5GHShg0bF3rv1oG5qcdaWFfjaE0xj7M38TwwxVQy3+QItwbrKdEW9o2YE2CmDNDv4dHkPzkC5X3uHOA==
   dependencies:
     "@types/tinycolor2" "^1.4.3"
     jsonc "^2.0.0"

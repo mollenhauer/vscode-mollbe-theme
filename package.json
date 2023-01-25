@@ -9,16 +9,17 @@
     "buildOutput": "mollbe-theme/themes/mollbe-theme.json"
   },
   "scripts": {
-    "build": "npx --no-install ts-node ./mollbe-theme.ts > ./mollbe-theme/themes/mollbe-theme.json",
+    "build": "npx --no-install ts-node ./mollbe-theme.ts",
+    "dev": "nodemon --watch ./includes --watch mollbe-theme.ts --exec npm run build",
     "vscode:prepublish": "npm run build",
     "package": "cd mollbe-theme && npm exec vsce package",
     "publish": "cd mollbe-theme && npm exec vsce publish minor"
   },
   "devDependencies": {
-    "@mollbe/theme-compiler": "file:../theme-compiler",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
-    "vsce": "^2.15.0"
+    "vsce": "^2.15.0",
+    "@mollbe/theme-compiler": "^0.0.6"
   },
   "vsce": {
     "baseImagesUrl": "https://raw.githubusercontent.com/mollenhauer/vscode-mollbe-theme/main/"
