@@ -20,7 +20,7 @@ format( "semantic.searchEditor.findMatchBorder", Transparent);
 
 // Linenumbers / LineHighlight
 const Selection = "hsl(325, 40%, 80%)"
-const wordHighlight = "hsl(60, 80%, 60%)"
+const wordHighlight = "hsla(60, 80%, 60%, .8)"
 const LineHighlight = '#00000010'
 format( "colors.editorLineNumber.activeForeground", Black);
 format( "colors.editorLineNumber.foreground",       color.mix(Background, Black, 15));
@@ -63,7 +63,7 @@ format( "colors.editorWarning.background",     'hsla(30, 100%, 50%, 0.12)');
 format( "colors.editorWarning.foreground",     Transparent);
 format( "colors.editorWarning.border",         Transparent);
 
-format( "colors.editorError.background",       'rgba(255, 0, 0, 0.10)');
+format( "colors.editorError.background",       'rgba(255, 0, 0, 0.08)');
 format( "colors.editorError.foreground",       Transparent);
 format( "colors.editorError.border",           Transparent);
 

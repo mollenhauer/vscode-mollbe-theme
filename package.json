@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "npx --no-install ts-node ./mollbe-theme.ts",
-    "dev": "nodemon --watch ./includes --watch mollbe-theme.ts --exec npm run build",
+    "dev": "nodemon --watch ./includes --watch mollbe-theme*.ts --exec npm run build",
     "vscode:prepublish": "npm run build",
     "package": "cd mollbe-theme && npm exec vsce package",
     "publish": "cd mollbe-theme && npm exec vsce publish minor"
