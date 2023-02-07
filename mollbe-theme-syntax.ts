@@ -21,7 +21,7 @@ const CommentOneliner = "hsl(175, 50%, 40%)"
 const DocString = "hsl(325, 50%, 60%)"
 const String = "hsl(96, 90%, 40%)"
 const StringTemplate = String
-const StringTemplatePlaceholder = "hsl(96, 80%, 60%)"
+const StringTemplatePlaceholder = "hsl(325, 50%, 60%)"
 const StringTemplatePlaceholderBrackets = HighlightedStructure
 
 format( 'source', Text );
@@ -57,18 +57,18 @@ format( "meta.class.python",                          StructureName        ); //
 format( "support.function.magic.python",              Structurel_Lvl1, bold); // __init__
 format( "entity.name.function.python",                StructureName        ); // def *methodname*, in ts also call of method
 format( "storage.type.function.python",               Structurel_Lvl1_Sub  );
-format( "variable.parameter.function-call.python" ,   Dim                  ); // def ( named_parameters)
+format( "variable.parameter.function-call" ,          Dim                  ); // def ( named_parameters)
 format( 'storage.modifier',                           Structurel_Lvl1_Sub);  // extends
 format( 'storage.type.interface',                     Structurel_Lvl1_Sub);  // interface {...}
 format( 'entity.name.type.interface.tsx',             Structurel_Lvl1, bold);
 format( 'entity.name.type.interface.ts',              Structurel_Lvl1, bold);
 format( 'keyword.control.export',                     Structurel_Lvl1_Sub);
-format( 'keyword.control.default',                    Structurel_Lvl1);
+format( 'keyword.control.default - meta.import',                    Structurel_Lvl1);
 // format( 'meta.var.expr', bold );
 
-format( 'meta.type.annotation.tsx',    Dim);
 format( 'support.type.primitive.tsx',  bold);
-format( 'meta.field.declaration.tsx',  Structurel_Lvl1_Sub);
+format( 'meta.field.declaration - meta.type.annotation',  Structurel_Lvl1_Sub);
+format( 'meta.type.annotation - meta.field.declaration',    Dim);
 
 // format( 'semantic.method.declaration', Structurel_Lvl1); // render() {...}
 
@@ -81,6 +81,7 @@ format( 'semantic.variable.declaration', Structurel_Lvl2);
 // format( 'meta.class.tsx', Structurel_Lvl1, bold);
 // format( 'meta.parameters',               Structurel_Lvl1_Sub);
 format( 'semantic.parameter',               Structurel_Lvl1_Sub);
+format( 'meta.function.parameters',               Structurel_Lvl1_Sub);
 // format( 'semantic.selfParameter',            Text);
 // format( 'storage.type', Text); // const, let, var
 
@@ -99,6 +100,8 @@ format( 'string.quoted.double.tsx', tag3);
 format( "punctuation.definition.block",          HighlightedStructure); //  {} all over the place
 // format( "meta.parameter.object-binding-pattern", Structurel_Lvl1_Sub); //  {} in ({type,...other}) => {
 format( "variable.parameter.js",                 Structurel_Lvl2); //  variablen in ({type,...other}) => { und in function( foo, bar )
+format( 'meta.object-literal.key',     Text); // {key: }
+format( 'meta.definition.property',    Text); // {key: }
 
 
 // Funktionsaufrufe
@@ -131,8 +134,10 @@ format( 'comment.block.documentation.js', DocString);
 // Strings
 
 
-format( 'string.quoted.double', String);
-format( 'string.quoted.single', String);
+format( 'string.quoted.single - string.interpolated', String);
+format( 'string.quoted.double - string.interpolated', String);
+format( 'string.interpolated', String);
+format( 'punctuation.definition.string', Dim);
 
 // String-Templates
 format( 'punctuation.definition.string.template', HighlightedStructure); // backticks
@@ -151,14 +156,14 @@ format( 'punctuation.accessor', Dim);
 format( 'punctuation.separator.key-value', Dim);
 format( 'keyword.operator.assignment', Dim); // =
 format( 'keyword.operator.comparison', Dim); // ==, ===
-format( 'punctuation.definition.string.begin', Dim); // "
-format( "punctuation.definition.string.end", Dim);
+format( 'punctuation.definition.string.begin - string.quoted.docstring', Dim); // "
+format( "punctuation.definition.string.end - string.quoted.docstring", Dim);
 format( "meta.brace.square.js", Dim);
 format( "keyword.operator.rest.js", Dim); //...
 format( "keyword.operator.spread.js", Dim); // ...
 
 
-format( 'meta.object-literal.key',     String); // {key: }
-format( 'meta.definition.property',     String); // {key: }
+
+
 
 export {theme}
